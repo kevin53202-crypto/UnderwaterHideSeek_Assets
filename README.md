@@ -50,6 +50,7 @@ Source/
 ├── DiveGear_Scene.blend     ← 모든 모델이 들어 있는 작업 씬
 ├── <모델명>.blend            ← 모델별 원본 (원점 기준, 실제 크기)
 └── _tools/                  ← 모델을 만드는 Python 스크립트
+    └── dev/                 ← 작업 보조 스크립트 (빌드·미리보기·FBX 검사·화면 열기)
 ```
 
 ---
@@ -109,6 +110,60 @@ mk.py  →  weather_bake.py  →  build_<소품>.py  →  export_all()
 - 망가진 Mk2 잠수함(외부·선실) 텍스처 굽기 — 진행용·수리된 잠수함은 언리얼 타일링 재질을 슬롯에 입히는 방식 권장
 - 다이버의 다른 동작(사물함 숨기, 사다리, 피격 등), 괴물의 수색·피격 애니메이션
 - 무거운 모델 LOD (Nanite를 쓰지 않을 경우)
+
+---
+
+## 다음 작업자를 위한 안내 (사람 · AI 공통)
+
+### 작업 시작하기
+
+1. 이 README → [`WORK_LOG.md`](WORK_LOG.md)(4장 "남은 일") → [`README_UNREAL.md`](README_UNREAL.md) 순서로 읽습니다.
+   Claude Code라면 새 대화에서 **"README와 WORK_LOG 읽고 다음 작업 진행해줘"** 로 시작하면 됩니다.
+2. Blender: `C:\Program Files\Blender Foundation\Blender 5.3\blender.exe` (5.3 기준으로 작업, 5.2.3으로 만든 파일도 열림).
+3. 아래 명령은 모두 **이 폴더(저장소 루트)에서** 실행합니다. `blender`는 위 실행 파일 경로입니다.
+
+### 작업 보조 스크립트 (`Source/_tools/dev/`)
+
+| 스크립트 | 하는 일 | 명령 |
+|---|---|---|
+| `run_prop.py` | 빌드 스크립트 실행(+ 텍스처 굽기·FBX 내보내기) 후 결과 씬을 **사본으로** 저장 | `blender -b --factory-startup Source/DiveGear_Scene.blend --python Source/_tools/dev/run_prop.py -- build_cave.py --export --save C:/temp/scene_new.blend` |
+| `preview_render.py` | 빌드 직후 모양 확인용 렌더링(재질 단색) | `blender -b --factory-startup Source/DiveGear_Scene.blend --python Source/_tools/dev/preview_render.py -- build_cave.py C:/temp/shots shots.json` |
+| `verify_fbx.py` | FBX를 빈 씬에 다시 불러와 재질·텍스처·삼각형·소켓 검사(+ 구운 텍스처로 렌더링) | `blender -b --factory-startup --python Source/_tools/dev/verify_fbx.py -- SM_SeaCave.fbx --render C:/temp/shots shots.json` |
+| `open_view.py` | Blender 화면을 특정 모델을 보는 시점으로 열기(Material Preview) | `blender Source/DiveGear_Scene.blend --python Source/_tools/dev/open_view.py -- SeaCave 18 -14 12 0 0.5 1.5` |
+
+`shots.json` 예: `[{"name": "cave_34", "roots": ["SeaCave"], "cam": [18, -14, 12], "look": [0, 0.5, 1.5], "lens": 22}]` (좌표는 모델 기준점 기준, m)
+
+### 새 맵 소품을 만들 때의 절차 (이번에 쓴 방식)
+
+1. `Source/_tools/build_<이름>.py`를 기존 소품(예: `build_breakwater.py`)을 본떠 만듭니다. 구성: `mats()`(재질 + `weather()` 값) → `build()`(모델 + 소켓) → `export_all()`(굽기·내보내기).
+2. `preview_render.py`로 여러 각도·내부를 렌더링해 **눈으로 확인 → 고치기**를 반복합니다. 숨는 장소는 **실제로 들어갈 수 있는지**(입구가 막히지 않았는지, 공간이 파였는지) 꼭 확인합니다.
+3. `run_prop.py ... --export --save <사본>`으로 굽고 FBX를 내보낸 뒤, `verify_fbx.py`로 다시 불러와 검사합니다.
+4. 모델별 `.blend` 분리: `blender -b --factory-startup --python Source/_tools/split_models.py -- <사본.blend> Source <RootName>`
+5. 작업 씬 교체: **열려 있는 Blender 창 제목에 `*`(저장 안 된 변경)가 있으면 덮어쓰지 말고** 먼저 닫게 한 뒤, `Source/DiveGear_Scene.blend`를 사본으로 바꿉니다(필요하면 이전 파일을 따로 보관).
+6. `README_UNREAL.md`(맵 소품 섹션 + 7장 JSON), 이 README의 표, `WORK_LOG.md`를 업데이트하고 커밋합니다. JSON은 파싱되는지 확인하세요.
+
+### 알아 둘 함정 (이번 작업에서 실제로 겪은 것)
+
+| 증상 | 원인 / 해결 |
+|---|---|
+| 불리언으로 판 공간 일부가 **조용히 안 파임** | 겹치는 잘라내기 모양을 순서대로 빼면 실패할 수 있음 → **하나의 오브젝트로 합친 뒤 한 번에** Difference, `use_self = True`, `use_hole_tolerant = True` (`build_cave.py`) |
+| 회전시킨 부품이 엉뚱한 곳에 감 | `mk.py`의 `box()`/`cyl()`은 **위치로 옮긴 뒤 회전**함 → 회전이 있으면 `box(size, (0,0,0), T(위치) @ 회전)` 형태로 |
+| 얇은 판이 예상과 반대쪽으로 두꺼워짐 | `bmesh.ops.solidify`는 **법선 반대쪽**으로 두께를 줌 |
+| FBX 소켓 이름에 `__SC` 같은 꼬리가 붙음 | 씬에서는 이름이 겹치지 않게 꼬리를 붙여 두고, 각 스크립트의 `export_all()`이 내보낼 때 뗌 → 직접 `export_unreal`을 부르면 꼬리가 남음 |
+| 구멍 둘레에 이상한 음영, 계단 모양 가장자리 | 격자 면을 통째로 빼면 계단이 생김 → 경계 정점을 매끈한 곡선 위로 옮김(`build_shipwreck.py`의 `hull_bm`), 음영은 녹슨 테두리 같은 덮개로 가림 |
+| 면 단위 재질 경계가 픽셀처럼 보임 | 얼룩·상처는 면 재질 대신 **표면에 붙인 얇은 패치(decal)** 나 굽기용 절차적 재질(`weather()`)로 |
+| 숨는 위치 소켓이 바닥 아래·벽 속에 생김 | 광선을 바위 속에서 쏘면 엉뚱한 면을 맞음 → 소켓 높이를 출력해서(`run_prop.py`가 보여 줌) 확인 |
+| `mk.py`의 결과가 `~/Documents`로 저장됨 | 기본 경로 → `OUT_DIR`/`SRC_DIR`을 이 폴더로 바꿔서 실행(`run_prop.py`가 해 줌) |
+| Blender 강제 종료 / 글씨·아이콘 깨짐 (Intel 그래픽) | Preferences → System → **GPU Backend = OpenGL**, Preferences → Save & Load → **Load UI 끄기**(이 저장소의 `.blend`는 화면 없이 저장되어 UI가 깨질 수 있음), 근본적으로는 그래픽 드라이버 업데이트 |
+| `bpy.data.libraries.write()`에 Scene을 넘기면 강제 종료 | 쓰지 말 것 (README_UNREAL 9장) |
+
+### 다음 작업 우선순위 (제안)
+
+1. **언리얼 프로젝트 정하기** → 에셋 임포트, 숨기·수리·잠수함 상태 교체 블루프린트 (README_UNREAL 6장에 설계 있음)
+2. 망가진 Mk2 잠수함(외부·선실) 텍스처 굽기 — 진행용·수리된 잠수함은 언리얼 타일링 재질을 슬롯에 입히는 방식
+3. 다이버 추가 동작(사물함 숨기, 사다리, 피격·사망) — 스크립트 키 애니메이션은 품질 한계가 있어 리타게팅(마켓플레이스·Mixamo)이나 Control Rig 권장
+4. 괴물 수색·피격 애니메이션, 무거운 모델 LOD(Nanite를 안 쓸 경우)
+5. 저장소가 커지면 Git LFS 도입
 
 ---
 
