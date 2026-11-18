@@ -1,0 +1,8 @@
+# Blender auto-saves (previous version of each .blend)
+*.blend1
+*.blend2
+# manual snapshot folders: kept on disk, git history replaces them
+Source/_backup_*/
+# Python caches
+__pycache__/
+*.pyc
