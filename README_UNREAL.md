@@ -4,7 +4,7 @@
 > 팀원과 팀원이 쓰는 AI가 함께 읽는 것을 전제로 작성했습니다.
 > AI 에이전트는 [7. AI 에이전트용 에셋 데이터](#7-ai-에이전트용-에셋-데이터)의 JSON을 기준 데이터로 사용하세요.
 
-- 마지막 업데이트: 2026-11-18 (맵 소품: 테트라포드 단독·방파제·해저 동굴·난파선·고래 뼈대·브라인 호수 신규 — 썩은 고래 사체는 뼈대로 교체, 흰색 Mk2 전용 선실 3종 + 사물함 문·전원 레버. Mk3 "만타"는 삭제 — 파일은 `Source/_backup_2026-11-18_mk3_removed/`)
+- 마지막 업데이트: 2026-11-20 (거대 등각류 v3 재제작(실물 충실) · 맵 소품: 테트라포드 단독·방파제·해저 동굴·난파선·고래 뼈대·브라인 호수 신규 — 썩은 고래 사체는 뼈대로 교체, 흰색 Mk2 전용 선실 3종 + 사물함 문·전원 레버. Mk3 "만타"는 삭제 — 파일은 `Source/_backup_2026-11-18_mk3_removed/`)
 - 이전: 2026-11-16 (안팎 모두 새 설계한 잠수함 Mk3 "만타" 3종 + 전용 선실·부품, 새 디자인 잠수함 Mk2 3종, 기존 잠수함 전체 녹슨 버전, 돔 유리 조각 6개 수집 방식, 추가 부품·맵 소품 6종, 잠수함 망가진/수리된 버전, 수리 부품 4종·수리 지점 총 8곳, 선실 디테일, 다이버 애니메이션 v2)
 - 이전: 2026-11-09 (뱀장어 v2, 기간투라 v3 괴물화 버전으로 새로 제작. 뼈대·애니메이션은 그대로)
 - 제작 도구: Blender 5.2.3 LTS (Claude + Blender MCP로 제작)
@@ -311,7 +311,7 @@ FBX에는 기본 색, 금속성, 거칠기만 들어갑니다. 아래 효과는 
 | `SK_Gigantura` 기간투라 | 길이 385cm, 높이 108cm(등 가시 포함) | 15 | 98,470 | `GT_Swim`(33f, 반복), `GT_Idle`(65f, 반복), `GT_Bite`(25f) | 루트 본 `gt_root`가 몸 중심. 재질 1개(`M_Gigantura`) + 4096 텍스처 4장. |
 | `SK_DeepSeaEel` 심해 뱀장어 | 길이 472cm | 15 | 68,704 | `EEL_Swim`(41f, 반복), `EEL_Idle`(81f, 반복), `EEL_Bite`(31f) | 루트 본 `eel_root`가 머리 뒤. 재질 1개(`M_DeepSeaEel`) + 4096 텍스처 4장. |
 | `SK_Kraken` 크라켄 | 전체 길이 약 600cm(외투막 230cm + 다리 약 300cm, 촉수 400cm), 폭 360cm | 69 | 130,171 | `KR_Idle`(81f, 반복), `KR_Swim`(41f, 반복), `KR_Attack`(31f) | 루트 본 `kr_root`가 머리와 외투막 경계. **다리 쪽이 앞(-Y)**. 다리 8개 × 뼈 6개, 촉수 2개 × 뼈 8개(`kr_arm1_1`…, `kr_tentL_1`…). 재질 1개(`M_Kraken`) + 4096 텍스처 4장. 삼각형이 많으니 LOD 필수. |
-| `SK_GiantIsopod` 거대 등각류 | 길이 294cm(더듬이 제외 250cm), 폭 247cm(다리 포함), 높이 72cm | 67 | 51,896 | `IS_Idle`(81f, 반복), `IS_Walk`(33f, 반복, 제자리), `IS_Attack`(31f) | **바닥을 기어다니는 타입**. 루트 본 `is_root`가 발바닥 높이(z=0) 몸 중앙. 다리 7쌍 × 뼈 3개(`is_legL1_1`…), 더듬이 2 × 5, 집게 2 × 2. 재질 1개(`M_GiantIsopod`) + 4096 텍스처 4장. |
+| `SK_GiantIsopod` 거대 등각류 (v3) | 몸길이 300cm(꼬리 가시 포함 320cm), 폭 189cm(다리 포함, 몸통 125cm), 높이 54cm | 69 | 55,794 | `IS_Idle`(97f, 반복), `IS_Walk`(37f, 반복, 제자리), `IS_Attack`(31f) | **바닥을 기어다니는 타입**. 루트 본 `is_root`가 발바닥 높이(z=0) 몸 중앙. 다리 7쌍 × 뼈 3개(`is_legL1_1`…), 더듬이 2 × 5, 턱다리 2 × 2(`is_clawL_1`…), 꼬리다리 `is_uroL/R`. 재질 1개(`M_GiantIsopod`) + 4096 텍스처 4장. |
 
 ### 괴물 디자인 (v2, 2026-11-09)
 
@@ -321,7 +321,8 @@ FBX에는 기본 색, 금속성, 거칠기만 들어갑니다. 아래 효과는 
 - **심해 뱀장어(펠리컨장어)**: 검고 점액질로 번들거리는 채찍 같은 몸, 주둥이 끝의 작고 탁한 눈, 몸 길이의 1/7에 달하는 긴 턱과 그 사이에 늘어진 **주름진 막 주머니**(핏줄이 비침, 안쪽은 젖은 살), 양턱의 가는 바늘 이빨, 등·배를 따라 이어진 지느러미 막, 꼬리 끝 미끼 = **분홍빛으로 빛나는 살덩이에 박혀 각자 다른 곳을 노려보는 눈알 5개**와 늘어진 실 촉수
 - **크라켄 (2026-11-09 신규)**: 기간투라 v3와 같은 괴물화 스타일. 종양 혹과 **뼈 가시 줄**이 솟은 주름진 외투막, 외투막의 발톱 찢김 3줄, 찢어진 꼬리 지느러미, 깊은 눈구멍 속 **가로 동공의 빛나는 호박색 눈 2개**와 머리 위 작은 눈 6개, 끝이 소용돌이처럼 말린 굵은 다리 8개(사이에 막), 긴 촉수 2개와 끝의 곤봉, **테두리에 갈고리 이빨이 난 빨판**, 다리 중심의 검은 부리와 이빨 고리 입.
   - 애니메이션: `KR_Idle` 다리가 천천히 꿈틀거림. `KR_Swim` 다리를 오므렸다 펴며 우산처럼 헤엄. `KR_Attack` 1~9f 다리를 활짝 펼침 → 10~17f 앞으로 약 100cm 덮치며 다리로 움켜쥠(루트 모션, `kr_root`) → 이후 천천히 풀림. 잡기 판정은 약 16f.
-- **거대 등각류 (2026-11-09 신규, 심해 쥐며느리 괴물)**: 바닥·동굴 벽·난파선을 **기어다니는 술래**. 때 묻은 누런 갑각판이 겹겹이 겹친 몸(판 뒷모서리마다 가시, 금, 녹 같은 핏자국, 따개비), 깨진 판 사이로 비어져 나온 생살, 머리 양옆의 검게 번들거리는 커다란 겹눈, 가시 돋은 다리 14개(끝은 검은 발톱), 긴 채찍 더듬이, 입 양옆의 갈고리 집게와 이빨 고리 입, 배 쪽 알주머니에 박힌 **연두색으로 빛나는 알 44개**(뒤집히거나 앞몸을 들 때 보임).
+- **거대 등각류 v3 (2026-11-20 재제작, 실제 등각류에 충실)**: 실제 심해 대왕 등각류(*Bathynomus giganteus*)를 약 3m로 키운 모습. 납작한 타원 방패형 몸통, 7장의 가슴판이 뒤쪽 판 위로 4cm씩 계단처럼 겹치고 옆판(epimera)이 아래로 늘어져 뒤로 갈수록 뒤쪽으로 뾰족해짐. 몸보다 좁은 머리가 1번 판 앞에 끼워져 있고, 머리 양옆 가장자리를 따라 납작한 타원형 겹눈. 다리는 **몸 아래에 숨겨진** 구조(굵은 밑마디는 몸 아래, 무릎은 껍질 가장자리, 끝마디는 바닥으로 거의 수직; 앞 3쌍은 앞쪽, 뒤 4쌍은 뒤쪽). 넓고 둥근 꼬리판에 가운데 낮은 용골과 가시 11개, 노 모양 꼬리다리. 색은 연보라 모브색 + 호박빛 갈색 얼룩·가장자리 띠, 미세한 점 구멍, AO(틈새 그늘)를 BaseColor에 구워 넣음. 판 앞쪽 어두운 띠·누런 가장자리 띠·2~3cm 반점·점 구멍·퇴적물 얼룩, 등판과 눈은 텍스처 면적 2배(UV 재배치). 공격(`IS_Attack`)은 앞몸을 들고 앞다리 3쌍을 뻗은 뒤 약 60cm 덮침(16프레임 즈음). 제작 스크립트 `Source/_tools/build_isopod_v3.py` (v2 `build_isopod_v2.py`는 참고용으로 남김), v1 백업 `Source/_backup_2026-11-19_isopod_v1/`.
+- *(구버전 v1 설명, 참고용)* **거대 등각류 (2026-11-09 신규, 심해 쥐며느리 괴물)**: 바닥·동굴 벽·난파선을 **기어다니는 술래**. 때 묻은 누런 갑각판이 겹겹이 겹친 몸(판 뒷모서리마다 가시, 금, 녹 같은 핏자국, 따개비), 깨진 판 사이로 비어져 나온 생살, 머리 양옆의 검게 번들거리는 커다란 겹눈, 가시 돋은 다리 14개(끝은 검은 발톱), 긴 채찍 더듬이, 입 양옆의 갈고리 집게와 이빨 고리 입, 배 쪽 알주머니에 박힌 **연두색으로 빛나는 알 44개**(뒤집히거나 앞몸을 들 때 보임).
   - 애니메이션: `IS_Idle` 더듬이가 흔들리고 집게가 경련. `IS_Walk` 다리 14개가 앞뒤로 물결치는 제자리 걸음(이동은 Character Movement로). `IS_Attack` 1~9f 앞몸을 치켜들고 집게를 벌림 → 10~15f 내리꽂으며 약 60cm 덮침(루트 모션, `is_root`). 물기 판정 약 14f.
   - 언리얼: 땅을 걷는 캐릭터라 **Character Movement의 Walking 모드**를 쓰고, 캡슐은 납작하니 반지름 약 60cm·반높이 약 40cm로 시작하세요. 벽·천장 타기를 하려면 별도 로직이 필요합니다.
 
@@ -880,13 +881,13 @@ AI 에이전트를 위한 기준 데이터입니다. 단위는 cm, 축은 Blende
      "animations": [{"name": "KR_Idle", "frames": 81, "loop": true}, {"name": "KR_Swim", "frames": 41, "loop": true},
                     {"name": "KR_Attack", "frames": 31, "loop": false, "root_motion_cm": 100, "grab_frame": 16}],
      "slots": ["M_Kraken"], "notes": ["needs LOD", "glowing eyes via emissive texture"], "movement": "Flying / FloatingPawnMovement"},
-    {"file": "SK_GiantIsopod.fbx", "type": "skeletal", "role": "enemy", "length_cm": 294, "width_cm": 247, "height_cm": 72, "facing": "Blender -Y", "bones": 67, "tris": 51896,
+    {"file": "SK_GiantIsopod.fbx", "type": "skeletal", "role": "enemy", "length_cm": 320, "width_cm": 189, "height_cm": 54, "facing": "Blender -Y", "bones": 69, "tris": 55794,
      "material": "M_GiantIsopod", "textures": ["Textures/T_GiantIsopod_BaseColor.png","Textures/T_GiantIsopod_Normal.png (OpenGL, flip green in UE)","Textures/T_GiantIsopod_Roughness.png","Textures/T_GiantIsopod_Emissive.png"],
      "root_bone": "is_root (ground level, body centre)", "bone_groups": {"body": ["is_head","is_seg1","is_seg2","is_seg3","is_body","is_seg5","is_seg6","is_seg7","is_pleon","is_tail"],
-       "legs": "is_legL1..7_1..3, is_legR1..7_1..3", "antennae": "is_antL_1..5, is_antR_1..5", "claws": "is_clawL_1..2, is_clawR_1..2"},
-     "animations": [{"name": "IS_Idle", "frames": 81, "loop": true}, {"name": "IS_Walk", "frames": 33, "loop": true, "in_place": true},
-                    {"name": "IS_Attack", "frames": 31, "loop": false, "root_motion_cm": 60, "bite_frame": 14}],
-     "slots": ["M_GiantIsopod"], "notes": ["glowing eggs on the belly via emissive texture"], "movement": "Walking (CharacterMovement), capsule r~60 hh~40"}
+       "legs": "is_legL1..7_1..3, is_legR1..7_1..3", "antennae": "is_antL_1..5, is_antR_1..5", "maxillipeds": "is_clawL_1..2, is_clawR_1..2", "uropods": "is_uroL, is_uroR"},
+     "animations": [{"name": "IS_Idle", "frames": 97, "loop": true}, {"name": "IS_Walk", "frames": 37, "loop": true, "in_place": true},
+                    {"name": "IS_Attack", "frames": 31, "loop": false, "root_motion_cm": 60, "bite_frame": 16}],
+     "slots": ["M_GiantIsopod"], "notes": ["v3 faithful Bathynomus, AO baked into BaseColor, emissive = faint eye glint only"], "movement": "Walking (CharacterMovement), capsule r~60 hh~35"}
   ],
   "assets": [
     {"file": "SM_Submarine.fbx", "category": "core_objective", "size": [700, 362, 397], "tris": 16076,

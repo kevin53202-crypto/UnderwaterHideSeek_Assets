@@ -106,6 +106,7 @@ mk.py  →  weather_bake.py  →  build_<소품>.py  →  export_all()
 - 맵 소품 6종 + 텍스처 굽기 (난파선, 해저 동굴, 방파제, 고래 뼈대, 브라인 호수, 테트라포드)
 
 **남은 일**
+- **거대 등각류 색 다시 하기 (사용자 지시, 2026-11-20)**: 현재 v3 색(연보라 모브 + 호박 갈색, 다리는 분홍 크림)이 마음에 들지 않음. **회색·흰색 계열은 모두 빼고 갈색 계열로만** 칠할 것 — 등판·옆판·꼬리판·다리·더듬이·배까지 전부. 모양(v3)은 유지하고 색만 수정.
 - 언리얼 프로젝트 선택 후 블루프린트(숨기, 수리 상호작용, 잠수함 상태 교체)
 - 망가진 Mk2 잠수함(외부·선실) 텍스처 굽기 — 진행용·수리된 잠수함은 언리얼 타일링 재질을 슬롯에 입히는 방식 권장
 - 다이버의 다른 동작(사물함 숨기, 사다리, 피격 등), 괴물의 수색·피격 애니메이션
@@ -129,7 +130,8 @@ mk.py  →  weather_bake.py  →  build_<소품>.py  →  export_all()
 | `run_prop.py` | 빌드 스크립트 실행(+ 텍스처 굽기·FBX 내보내기) 후 결과 씬을 **사본으로** 저장 | `blender -b --factory-startup Source/DiveGear_Scene.blend --python Source/_tools/dev/run_prop.py -- build_cave.py --export --save C:/temp/scene_new.blend` |
 | `preview_render.py` | 빌드 직후 모양 확인용 렌더링(재질 단색) | `blender -b --factory-startup Source/DiveGear_Scene.blend --python Source/_tools/dev/preview_render.py -- build_cave.py C:/temp/shots shots.json` |
 | `verify_fbx.py` | FBX를 빈 씬에 다시 불러와 재질·텍스처·삼각형·소켓 검사(+ 구운 텍스처로 렌더링) | `blender -b --factory-startup --python Source/_tools/dev/verify_fbx.py -- SM_SeaCave.fbx --render C:/temp/shots shots.json` |
-| `open_view.py` | Blender 화면을 특정 모델을 보는 시점으로 열기(Material Preview) | `blender Source/DiveGear_Scene.blend --python Source/_tools/dev/open_view.py -- SeaCave 18 -14 12 0 0.5 1.5` |
+| `open_view.py` | Blender 화면을 특정 모델만 보이게 열기(로컬 뷰, 뼈 숨김, Material Preview; `/`로 전체 보기). `-- ALL`이면 모든 모델 | `blender Source/DiveGear_Scene.blend --python Source/_tools/dev/open_view.py -- SeaCave 18 -14 12 0 0.5 1.5` |
+| `fix_texture_paths.py` | 찾을 수 없는 텍스처(다른 PC 절대경로 등)를 `Textures/`의 같은 이름 파일로 다시 연결(분홍색 해결). **씬을 교체한 뒤 꼭 실행** | `blender -b --factory-startup Source/DiveGear_Scene.blend --python Source/_tools/dev/fix_texture_paths.py` |
 
 `shots.json` 예: `[{"name": "cave_34", "roots": ["SeaCave"], "cam": [18, -14, 12], "look": [0, 0.5, 1.5], "lens": 22}]` (좌표는 모델 기준점 기준, m)
 
@@ -159,6 +161,11 @@ mk.py  →  weather_bake.py  →  build_<소품>.py  →  export_all()
 
 ### 다음 작업 우선순위 (제안)
 
+0. **거대 등각류 색 수정 (사용자가 다음에 하기로 한 일)** — 회색·흰색 빼고 **갈색 계열만** 사용. 방법:
+   - `Source/_tools/build_isopod_v3.py`의 셰이더 함수 `carapace()`·`underside()`·`legs()`의 색 값(ramp·mix의 RGB)과 `simple_shader(M_spine, ...)` 색을 갈색 계열로 교체. 눈(`compound_eye`)은 어두운 색 유지.
+   - 채도 확인: 지난번 회색으로 보인 원인은 기본 색이 회색에 가까웠기 때문(BaseColor 평균 채도 0.14 → 0.25로 올렸지만 여전히 불만). 갈색이면 채도 0.4 이상을 목표로, 구운 `Textures/T_GiantIsopod_BaseColor.png`의 채도를 numpy로 재서 확인.
+   - 굽기 전에 `BAKE_SIZE=1024`로 빠르게 시험 → 확인 후 4096. 굽는 순서·씬 교체는 아래 "새 맵 소품을 만들 때의 절차"와 같음(드라이버 예: 씬을 연 뒤 mk.py → rig.py → horror.py → horror2.py → monsters_v2_pipeline.py → build_isopod_v3.py 실행, `bake_and_export(4096)`).
+   - 씬 교체 후에는 `Source/_tools/dev/fix_texture_paths.py`로 텍스처 경로를 다시 맞출 것(괴물 텍스처가 원작자 PC 절대경로라 분홍색으로 보이는 문제).
 1. **언리얼 프로젝트 정하기** → 에셋 임포트, 숨기·수리·잠수함 상태 교체 블루프린트 (README_UNREAL 6장에 설계 있음)
 2. 망가진 Mk2 잠수함(외부·선실) 텍스처 굽기 — 진행용·수리된 잠수함은 언리얼 타일링 재질을 슬롯에 입히는 방식
 3. 다이버 추가 동작(사물함 숨기, 사다리, 피격·사망) — 스크립트 키 애니메이션은 품질 한계가 있어 리타게팅(마켓플레이스·Mixamo)이나 Control Rig 권장
