@@ -71,7 +71,7 @@ UnderwaterHideSeek_Assets/
         ├── build_eel_v2.py (현재) / (v1: build_eel.py)
         ├── build_kraken.py, build_isopod.py
         ├── build_diver_v2.py, build_diver_anims.py (v1, 사용 안 함)
-        ├── anim_kit.py + diver_poses.py + build_diver_anims_v2.py   ← 다이버 애니메이션 v2 (이 순서로 exec)
+        ├── anim_kit.py + build_diver_anims_v3.py   ← 다이버 애니메이션 v3 (이 순서로 exec; v2는 diver_poses.py + build_diver_anims_v2.py)
         └── monsters_v2_pipeline.py   ← uv_prep() / finalize() (모든 캐릭터 공통)
 ```
 
@@ -99,12 +99,13 @@ UnderwaterHideSeek_Assets/
 - [x] 흰색 Mk2 전용 선실 3종 + 사물함 문·전원 레버 (2026-11-18, `build_sub2_interior.py`). 재임포트로 소켓 17개 확인.
 - [x] 맵 소품 1차 (2026-11-18): 고래 사체 2종, 브라인 호수 → 같은 날 **v2 디테일 작업**(사용자: "퀄리티가 다른 것에 비해 떨어짐"). 고래: 수염고래 두개골·고래수염·척추 돌기·상처·먹장어·게 등, 브라인: 조개 모양 홍합 덩어리·암석·하이드레이트·물결 등. v1은 `Source/_backup_2026-11-18_map_props_v1/`. 남은 맵 아이디어: 난파선, 해저 동굴, 방파제.
 - [~] 다이버 애니메이션 v2 (2026-11-16): 키 포즈 + IK 접촉 + 관절별 시차 + 떠 있기 레이어. **사용자 평가: 만족스럽지 않음 → 일단 보류하고 다음 단계로.** 다시 할 때는 스크립트 키 자세만 다듬기보다 리타게팅(마켓플레이스/Mixamo 수중·상호작용 동작)이나 언리얼 Control Rig 등 방식 변경을 먼저 검토할 것.
-  - 고칠 때: `diver_poses.py`/`build_diver_anims_v2.py`의 키 자세 값을 바꾸고 다시 exec → `rig.py`의 `export_skeletal(rig, "SK_Diver")`. 기준은 README **4-C**.
+  - 고칠 때: `build_diver_anims_v3.py`의 키 자세 값을 바꾸고 다시 exec → `rig.py`의 `export_skeletal(rig, "SK_Diver")`. 기준은 README **4-C**.
 - [ ] 언리얼 쪽 마무리: Motion Warping, Two Bone IK, 수리 Montage 섹션·Notify (README 4-B).
 - [ ] 다이버의 다른 동작(사물함 숨기, 사다리, 피격·사망, 해치 열기)은 아직 없음.
 - [x] 잠수함 수리 부품 4개 + 수리 지점 추가 (2026-11-16): `SM_PropBlade`, `SM_HullPatch`, `SM_ScrubberCartridge`, `SM_CircuitBoard` → 수리 지점 총 8곳(외부 6, 내부 2). 도구 `build_repair_parts2.py`.
 - [x] 잠수함 선실 디테일 (2026-11-16): `build_interior_detail.py` (IN_D_* 오브젝트, 다시 실행하면 지우고 새로 만듦). 내부 약 6천 → 2.2만 삼각형.
 - [ ] **거대 등각류 색 다시 하기 (사용자 지시, 2026-11-20)**: v3 색이 마음에 안 듦. 회색·흰색 모두 빼고 **갈색 계열만** 사용(몸·다리·더듬이·배 전부, 눈은 어둡게 유지). 모양은 v3 유지. 방법은 README.md "다음 작업 우선순위" 0번.
+- [x] 다이버 애니메이션 v3 (2026-11-20): 기존 9개 수정(좀비 팔 원인 = 리그 위치 무시한 IK 목표, 꼿꼿이 선 떠 있기 → 수평 트림, 줍기 뒤집힘, 패널 거리) + 새 6개(`DV_SwimFast`, `DV_Hit`, `DV_Death`, `DV_Hide_Enter/_Idle/_Exit`). `build_diver_anims_v3.py`.
 - [ ] 크라켄 사용자 피드백 대기.
 - [x] 거대 등각류 v2: 사실적 Bathynomus 형태로 재제작, 3m, 뼈 69, 애니 3종, 4096 텍스처 (2026-11-19).
 - [x] 거대 등각류 v3: v2 피드백(다리가 거미처럼 뻗음, 알약 같은 몸, 공 같은 눈, 단조로운 색) 반영 재제작 — 다리를 몸 아래로, 겹친 판·옆판, 머리 옆 납작한 겹눈, AO 구움 (2026-11-20).

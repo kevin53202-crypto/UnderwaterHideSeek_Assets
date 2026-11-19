@@ -4,7 +4,7 @@
 > 팀원과 팀원이 쓰는 AI가 함께 읽는 것을 전제로 작성했습니다.
 > AI 에이전트는 [7. AI 에이전트용 에셋 데이터](#7-ai-에이전트용-에셋-데이터)의 JSON을 기준 데이터로 사용하세요.
 
-- 마지막 업데이트: 2026-11-20 (거대 등각류 v3 재제작(실물 충실) · 맵 소품: 테트라포드 단독·방파제·해저 동굴·난파선·고래 뼈대·브라인 호수 신규 — 썩은 고래 사체는 뼈대로 교체, 흰색 Mk2 전용 선실 3종 + 사물함 문·전원 레버. Mk3 "만타"는 삭제 — 파일은 `Source/_backup_2026-11-18_mk3_removed/`)
+- 마지막 업데이트: 2026-11-20 (다이버 애니메이션 v3: 9개 수정 + 도망·피격·사망·숨기 6개 추가 · 거대 등각류 v3 재제작(실물 충실) · 맵 소품: 테트라포드 단독·방파제·해저 동굴·난파선·고래 뼈대·브라인 호수 신규 — 썩은 고래 사체는 뼈대로 교체, 흰색 Mk2 전용 선실 3종 + 사물함 문·전원 레버. Mk3 "만타"는 삭제 — 파일은 `Source/_backup_2026-11-18_mk3_removed/`)
 - 이전: 2026-11-16 (안팎 모두 새 설계한 잠수함 Mk3 "만타" 3종 + 전용 선실·부품, 새 디자인 잠수함 Mk2 3종, 기존 잠수함 전체 녹슨 버전, 돔 유리 조각 6개 수집 방식, 추가 부품·맵 소품 6종, 잠수함 망가진/수리된 버전, 수리 부품 4종·수리 지점 총 8곳, 선실 디테일, 다이버 애니메이션 v2)
 - 이전: 2026-11-09 (뱀장어 v2, 기간투라 v3 괴물화 버전으로 새로 제작. 뼈대·애니메이션은 그대로)
 - 제작 도구: Blender 5.2.3 LTS (Claude + Blender MCP로 제작)
@@ -307,7 +307,7 @@ FBX에는 기본 색, 금속성, 거칠기만 들어갑니다. 아래 효과는 
 
 | FBX | 크기 | 뼈 | 삼각형 | 애니메이션 (24fps) | 유의사항 |
 |---|---|---|---|---|---|
-| `SK_Diver` 주인공 다이버 (v2) | 키 182cm(헤드램프 포함, T-포즈), 팔 폭 174cm, 오리발 포함 앞뒤 95cm | 23 | 33,280 | **v2 (2026-11-16)**: `DV_SwimIdle`(96f, 반복), `DV_Swim`(56f, 반복, 개구리차기), `DV_Pickup`(72f), `DV_Repair_Start`(24f) / `_LoopA`(48f) / `_LoopB`(36f) / `_LoopC`(36f) / `_End`(24f), `DV_Install`(48f) — 그 외 동작은 마네킹 리타게팅 | 뼈 이름이 **UE 마네킹과 같음**. 루트 본 `root`는 발바닥 중앙(원점). 검은 드라이슈트(주황 어깨·옆구리 패널, 반사 테이프) + **장비 일체형**(아래 참고). 재질 1개(`M_Diver`) + 4096 텍스처 4장. |
+| `SK_Diver` 주인공 다이버 (v2) | 키 182cm(헤드램프 포함, T-포즈), 팔 폭 174cm, 오리발 포함 앞뒤 95cm | 23 | 33,280 | **v3 (2026-11-20), 15개**: `DV_SwimIdle`(96f, 반복), `DV_Swim`(56f, 반복, 개구리차기), `DV_SwimFast`(28f, 반복, 도망), `DV_Pickup`(72f), `DV_Repair_Start`(24f) / `_LoopA`(48f) / `_LoopB`(36f) / `_LoopC`(36f) / `_End`(24f), `DV_Install`(48f), `DV_Hit`(28f), `DV_Death`(84f), `DV_Hide_Enter`(30f) / `_Idle`(96f, 반복) / `_Exit`(24f) — 그 외 동작은 마네킹 리타게팅 | 뼈 이름이 **UE 마네킹과 같음**. 루트 본 `root`는 발바닥 중앙(원점). 검은 드라이슈트(주황 어깨·옆구리 패널, 반사 테이프) + **장비 일체형**(아래 참고). 재질 1개(`M_Diver`) + 4096 텍스처 4장. |
 | `SK_Gigantura` 기간투라 | 길이 385cm, 높이 108cm(등 가시 포함) | 15 | 98,470 | `GT_Swim`(33f, 반복), `GT_Idle`(65f, 반복), `GT_Bite`(25f) | 루트 본 `gt_root`가 몸 중심. 재질 1개(`M_Gigantura`) + 4096 텍스처 4장. |
 | `SK_DeepSeaEel` 심해 뱀장어 | 길이 472cm | 15 | 68,704 | `EEL_Swim`(41f, 반복), `EEL_Idle`(81f, 반복), `EEL_Bite`(31f) | 루트 본 `eel_root`가 머리 뒤. 재질 1개(`M_DeepSeaEel`) + 4096 텍스처 4장. |
 | `SK_Kraken` 크라켄 | 전체 길이 약 600cm(외투막 230cm + 다리 약 300cm, 촉수 400cm), 폭 360cm | 69 | 130,171 | `KR_Idle`(81f, 반복), `KR_Swim`(41f, 반복), `KR_Attack`(31f) | 루트 본 `kr_root`가 머리와 외투막 경계. **다리 쪽이 앞(-Y)**. 다리 8개 × 뼈 6개, 촉수 2개 × 뼈 8개(`kr_arm1_1`…, `kr_tentL_1`…). 재질 1개(`M_Kraken`) + 4096 텍스처 4장. 삼각형이 많으니 LOD 필수. |
@@ -350,24 +350,31 @@ FBX에 텍스처 경로가 들어 있어 임포트할 때 자동으로 연결될
   1. `SK_Diver`용 **IK Rig**를 만들고 체인을 설정합니다: Spine(`spine_01`~`spine_03`), Head(`neck_01`~`head`), LeftArm(`clavicle_l`~`hand_l`), RightArm, LeftLeg(`thigh_l`~`ball_l`), RightLeg. Retarget Root는 `pelvis`입니다.
   2. **IK Retargeter**로 UE5 Manny(또는 Quinn)의 애니메이션을 옮깁니다. 다이버는 **T-포즈**이고 Manny는 A-포즈라서, Retarget Pose에서 다이버 팔을 약 45° 내리세요.
   3. 수영 애니메이션은 언리얼 기본 팩에 없으니 마켓플레이스 수영 애니메이션을 리타게팅하는 것을 권장합니다.
-- **상호작용 애니메이션 v2 (2026-11-16)**: [4-C 지침](#4-c-수리부품-줍기-애니메이션-개선-지침)대로 다시 만들었습니다(v1은 부자연스러워서 교체). 모두 24fps, 제자리(루트 모션 없음). 임포트 시 `Armature|Armature|DV_Pickup`처럼 들어오니 `AS_Diver_Pickup` 등으로 이름을 바꾸세요.
-  - 만든 방식: 구간마다 키 자세를 직접 잡고(Bezier 보간), **고개 → 몸통 → 어깨 → 팔꿈치 → 손목** 순으로 2~4프레임씩 늦게 따라가게 했습니다. 손이 닿는 프레임은 **IK로 손목 위치를 맞춘 뒤 FK로 구움**(FBX에는 IK 없음). **물속 떠 있기 레이어**(호흡, 부력으로 ±1.2cm 출렁임, 고개의 느린 흔들림, 느린 오리발 스컬링)를 모든 동작에 더했고, 시간 방향으로 살짝 부드럽게 다듬어 튀는 프레임을 없앴습니다(2026-11-16 2차 수정). 한 번만 재생하는 동작은 레이어가 시작·끝에서 0이 되어 다른 동작과 깔끔하게 이어집니다. 키는 매 프레임 구워져 있습니다.
+- **애니메이션 v3 (2026-11-20)**: 9개 전부 다시 다듬고 6개 추가(총 15개). 모두 24fps, 제자리(루트 모션 없음). 임포트 시 `Armature|Armature|DV_Pickup`처럼 들어오니 `AS_Diver_Pickup` 등으로 이름을 바꾸세요. 제작 스크립트 `Source/_tools/build_diver_anims_v3.py`(실행: `anim_kit.py` → `build_diver_anims_v3.py`), v2 백업 `Source/_backup_2026-11-20_diver_anims_v2/`.
+  - **v2에서 고친 것**: ① 씬에서 `Diver_Rig`가 x=-3.5m에 있는데 손 IK 목표를 월드 좌표로 줘서 손이 3.5m 옆을 향해 **팔이 일자로 뻗던 문제**(좀비 팔) → 리그를 원점에 두고 만든 뒤 되돌림. ② 떠 있기가 땅에 선 듯 **꼿꼿이 선 자세** → 몸을 약 50° 숙인 수평 **개구리 트림 자세**(무릎 굽힘, 오리발 뒤·위, 팔은 배 앞에 느슨히 접음). ③ 줍기에서 몸이 **서 있다가 엎어지듯 뒤집힘** → 트림 자세에서 머리 쪽으로 이어서 기울어짐. ④ 패널이 팔 길이보다 멀어 팔이 펴짐 → 패널을 가슴 앞 45~50cm로, 몸을 살짝 기울여 팔꿈치가 굽게.
+  - 만든 방식(v2와 같음): 구간마다 키 자세(Bezier), **고개 → 몸통 → 어깨 → 팔꿈치 → 손목** 순으로 늦게 따라감, 손이 닿는 프레임은 IK로 맞춘 뒤 FK로 구움, 물속 떠 있기 레이어(호흡·출렁임·고개·오리발), 매 프레임 키.
 
 | 애니메이션 | 길이 | 용도 | 연결 방법 / Notify |
 |---|---|---|---|
-| `DV_SwimIdle` | 96f 반복 | 떠 있기. 무릎 굽힌 트림 자세, 호흡, 손 스컬링, 고개 둘러보기, 한쪽 오리발 보정 | AnimBP 속도 0일 때 |
-| `DV_Swim` | 56f 반복 | 수평 자세 **개구리차기**(접기 → 발 돌리기 → 차기 → 미끄러지기) | 속도에 따라 SwimIdle ↔ Swim 블렌드 |
-| `DV_Pickup` | 72f | 아래 앞쪽 부품 줍기: 시선 → 오리발 한 번 차며 앞으로 기울기 → 손 뻗기 → 잡기 → 무게로 손이 살짝 내려감 → 가슴 앞에서 확인 → 허벅지 주머니에 넣기 | Montage. **34f `GrabItem`**(손이 닿는 프레임) |
-| `DV_Repair_Start` | 24f | 패널로 다가가 **왼손으로 가장자리를 잡고** 무릎을 뒤로 접어 고정, 오른손 렌치 잡기 | Montage 섹션 `Start` |
-| `DV_Repair_LoopA` | 48f | 렌치 3번 끊어 돌리기(70°/85°/60°, 돌릴 때마다 어깨·몸통 반동) | 섹션 `Loop_A`. `Ratchet` 8f/24f/39f |
+| `DV_SwimIdle` | 96f 반복 | 떠 있기. **수평 트림 자세**, 호흡, 손 스컬링, 좌우 둘러보기, 한쪽 오리발 보정 | AnimBP 속도 0일 때 |
+| `DV_Swim` | 56f 반복 | 수평 자세 **개구리차기**(접기 → 발 돌리기 → 차기 → 미끄러지기), 팔은 몸 앞에 접음 | 속도에 따라 SwimIdle ↔ Swim 블렌드 |
+| `DV_SwimFast` | 28f 반복 | **도망치기**: 빠른 플러터킥(다리 번갈아 차기), 팔은 몸 옆에 붙여 유선형 | 달리기(스프린트) 입력 / 빠른 속도 |
+| `DV_Pickup` | 72f | 아래 앞쪽 부품 줍기: 시선 → 오리발 한 번 차며 머리 쪽으로 기울기 → 손 뻗기 → 잡기 → 무게로 손이 살짝 내려감 → 가슴 앞에서 확인 → 허벅지 주머니에 넣기 | Montage. **34f `GrabItem`**(손이 닿는 프레임) |
+| `DV_Repair_Start` | 24f | 패널을 보고 다가가 몸을 세우며 **왼손으로 가장자리를 잡고** 무릎을 뒤로 접어 고정, 오른손 렌치 잡기 | Montage 섹션 `Start` |
+| `DV_Repair_LoopA` | 48f | 렌치 3번 끊어 돌리기(80°/95°/70°, 돌릴 때마다 어깨·몸통 반동) | 섹션 `Loop_A`. `Ratchet` 8f/24f/39f |
 | `DV_Repair_LoopB` | 36f | 꽉 낀 볼트를 두 손으로 힘주어 돌리기(어깨가 올라갔다 풀림) | 섹션 `Loop_B`. `Strain` 16f |
 | `DV_Repair_LoopC` | 36f | 손을 멈추고 고개를 기울여 들여다본 뒤 장갑으로 패널을 쓸어봄 | 섹션 `Loop_C`. `Inspect` 10f |
-| `DV_Repair_End` | 24f | 손을 놓고 뒤로 밀며 떠 있기 자세로 | 섹션 `End` |
+| `DV_Repair_End` | 24f | 손을 놓고 뒤로 밀며 트림 자세로 | 섹션 `End` |
 | `DV_Install` | 48f | 두 손으로 부품 각도 맞추기(좌우 흔들기) → 밀어 넣다 걸림 → 90° 돌려 잠금 → 경고등 확인 → 복귀 | Montage. **24f `AttachPart`**, **36f `LockPart`** |
+| `DV_Hit` | 28f | **피격**: 앞에서 맞아 뒤로 튕김(머리 젖힘, 팔·다리 벌어짐) → 두 팔로 마스크를 가림 → 트림 자세로 복귀 | Montage(상체·전신). 4f가 충격 프레임 |
+| `DV_Death` | 84f | **사망**: 충격 → 경련 → 힘이 빠져 축 늘어짐 → 천천히 옆으로 구르며 약 40cm 가라앉음. 마지막 자세 유지 | Montage, 끝에서 정지(또는 래그돌 전환) |
+| `DV_Hide_Enter` | 30f | **숨기 시작**: 뒤를 한 번 돌아본 뒤 무릎을 가슴으로 당기고 팔로 감싸 작게 웅크림(틈·사물함 안) | Montage → Hide_Idle |
+| `DV_Hide_Idle` | 96f 반복 | 웅크린 채 숨죽임: 얕은 호흡, 입구 쪽으로 살짝 고개 내밀어 엿보기 | 숨은 상태 동안 반복 |
+| `DV_Hide_Exit` | 24f | 웅크림을 풀고 주위를 본 뒤 트림 자세로 | 숨기 해제 |
 
   - **수리 Montage 구성**: 슬롯에 `Start → LoopA → LoopB → LoopC → End` 5개를 이어 놓고 각각 섹션으로 지정합니다. 세 Loop는 **같은 자세(WORK)로 시작하고 끝나므로** 어떤 순서로 이어도 튀지 않습니다. 진행 바가 차는 동안 `Montage Set Next Section`으로 `A → A → B → A → C …`처럼 무작위로 이어 붙이고(같은 Loop 연속 2번 이하), 수리가 끝나거나 취소되면 `End`로 넘기세요.
-  - **위치 맞추기**: 수리·설치 동작의 손 위치는 캐릭터 원점(발바닥 중앙, -Y가 앞) 기준으로 **패널 면이 약 58~60cm 앞**, 렌치 볼트는 높이 약 126cm(원점 기준), 왼손 잡는 곳은 약 (X +22, 높이 142cm)입니다. `SOCKET_Repair_*` 앞 약 60cm에 서도록 **Motion Warping**으로 맞추고, 수리 지점마다 높이 차이(배터리 칸은 낮음, 퓨즈함은 높음)는 캐릭터 높이(Z) 이동이나 **Two Bone IK**로 보정하세요.
-  - **줍기 위치**: 부품(손목 기준)이 원점에서 앞 약 76cm, 높이 약 62cm에 있을 때 손이 정확히 닿습니다(머리 쪽이 앞으로 숙여짐). 다르면 Motion Warping으로 캐릭터를 옮기세요.
+  - **위치 맞추기 (v3)**: 수리·설치 손 위치는 캐릭터 원점(발바닥 중앙, -Y가 앞) 기준으로 **패널 면이 약 48~50cm 앞**, 렌치 볼트 높이 약 122cm, 왼손 잡는 곳 약 (X +24, 높이 134cm), 부품 끼우는 슬롯 높이 약 124cm입니다. `SOCKET_Repair_*` 앞 약 50cm에 오도록 **Motion Warping**으로 맞추고, 수리 지점마다 높이 차이는 캐릭터 높이(Z) 이동이나 **Two Bone IK**로 보정하세요.
+  - **줍기 위치 (v3)**: 부품(손목 기준)이 원점에서 앞 약 84cm, 높이 약 64cm에 있을 때 손이 정확히 닿습니다(머리 쪽으로 기울어짐). 다르면 Motion Warping으로 캐릭터를 옮기세요.
 
 - **장비는 v2부터 캐릭터에 포함돼 있습니다(2026-11-09).** 마스크·후드·헤드램프, 산소통·밸브·백플레이트·BCD 날개·하네스, 호스·잔압계, 다이브 컴퓨터(왼손목), 칼(오른쪽 종아리), 허벅지 주머니, 무릎 보호대, 오리발이 모두 `SK_Diver` 메시 안에서 뼈를 따라 움직입니다. 따로 붙일 필요가 없습니다.
   - 정적 장비 FBX(`SM_ScubaTank`, `SM_BCD`, `SM_DiveMask`, `SM_Fin`, `SM_Regulator`)는 **줍는 아이템·잠수함 소품용**으로 그대로 씁니다.
@@ -845,16 +852,21 @@ AI 에이전트를 위한 기준 데이터입니다. 단위는 cm, 축은 Blende
     {"file": "SK_Diver.fbx", "type": "skeletal", "role": "player", "height_cm": 178, "pose": "T-pose", "facing": "Blender -Y (rotate mesh yaw -90 in Character BP)",
      "bones": 23, "tris": 5744, "root_bone": "root (feet origin)", "ue_mannequin_bone_names": true,
      "bone_list": ["root","pelvis","spine_01","spine_02","spine_03","neck_01","head","clavicle_l","upperarm_l","lowerarm_l","hand_l","thigh_l","calf_l","foot_l","ball_l","clavicle_r","upperarm_r","lowerarm_r","hand_r","thigh_r","calf_r","foot_r","ball_r"],
-     "animations_version": "v2 (2026-11-16, hand-keyed poses, IK-placed contacts baked to FK)",
+     "animations_version": "v3 (2026-11-20, hand-keyed poses, IK-placed contacts baked to FK; horizontal trim idle)",
      "animations": [{"name": "DV_SwimIdle", "frames": 96, "loop": true}, {"name": "DV_Swim", "frames": 56, "loop": true, "pose": "horizontal, frog kick"},
-                    {"name": "DV_Pickup", "frames": 72, "loop": false, "notify": {"GrabItem": 34}, "item_wrist_target_cm": [-12, -76, 62]},
+                    {"name": "DV_SwimFast", "frames": 28, "loop": true, "pose": "horizontal, flutter kick, flee"},
+                    {"name": "DV_Pickup", "frames": 72, "loop": false, "notify": {"GrabItem": 34}, "item_wrist_target_cm": [-10, -84, 64]},
                     {"name": "DV_Repair_Start", "frames": 24, "loop": false, "montage_section": "Start"},
                     {"name": "DV_Repair_LoopA", "frames": 48, "loop": true, "montage_section": "Loop_A", "notify": {"Ratchet": [8, 24, 39]}},
                     {"name": "DV_Repair_LoopB", "frames": 36, "loop": true, "montage_section": "Loop_B", "notify": {"Strain": 16}},
                     {"name": "DV_Repair_LoopC", "frames": 36, "loop": true, "montage_section": "Loop_C", "notify": {"Inspect": 10}},
                     {"name": "DV_Repair_End", "frames": 24, "loop": false, "montage_section": "End"},
-                    {"name": "DV_Install", "frames": 48, "loop": false, "notify": {"AttachPart": 24, "LockPart": 36}}],
-     "repair_layout_cm": {"panel_distance": 58, "bolt": [-6, -57, 126], "left_grip": [22, -52, 142], "note": "Blender axes from character origin, -Y forward; loops share the same start/end pose"},
+                    {"name": "DV_Install", "frames": 48, "loop": false, "notify": {"AttachPart": 24, "LockPart": 36}},
+                    {"name": "DV_Hit", "frames": 28, "loop": false, "impact_frame": 4},
+                    {"name": "DV_Death", "frames": 84, "loop": false, "hold_last_frame": true, "sink_cm": 40},
+                    {"name": "DV_Hide_Enter", "frames": 30, "loop": false}, {"name": "DV_Hide_Idle", "frames": 96, "loop": true},
+                    {"name": "DV_Hide_Exit", "frames": 24, "loop": false}],
+     "repair_layout_cm": {"panel_distance": 50, "bolt": [-6, -50, 122], "left_grip": [24, -44, 134], "install_slot": [0, -50, 124], "note": "Blender axes from character origin, -Y forward; loops share the same start/end pose"},
      "root_motion": false, "retarget": "IK Retargeter from UE5 Manny; lower arms ~45deg in retarget pose", "height_cm_v2": 182,
      "version": 2, "tris": 33280, "material": "M_Diver",
      "textures": ["Textures/T_Diver_BaseColor.png","Textures/T_Diver_Normal.png (OpenGL, flip green in UE)","Textures/T_Diver_Roughness.png","Textures/T_Diver_Emissive.png"],
