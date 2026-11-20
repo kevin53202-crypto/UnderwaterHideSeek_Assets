@@ -16,7 +16,7 @@
 
 | 분류 | 에셋 | 비고 |
 |---|---|---|
-| **캐릭터** (뼈대·애니메이션) | 다이버 `SK_Diver`, 괴물 4종 `SK_Gigantura`(기간투라) · `SK_DeepSeaEel`(심해 뱀장어) · `SK_Kraken`(크라켄) · `SK_GiantIsopod`(거대 등각류) | 괴물은 4096 텍스처 구움. 다이버 애니메이션 15개(헤엄·도망·줍기·수리·끼우기·피격·사망·숨기), 괴물은 헤엄·대기·공격 |
+| **캐릭터** (뼈대·애니메이션) | 다이버 `SK_Diver`, 괴물 4종 `SK_Gigantura`(기간투라) · `SK_DeepSeaEel`(심해 뱀장어) · `SK_Kraken`(크라켄) · `SK_GiantIsopod`(거대 등각류) | 괴물은 4096 텍스처 구움. 다이버 애니메이션 15개(헤엄·도망·줍기·수리·끼우기·피격·사망·숨기), 괴물은 헤엄·대기·공격·수색·피격 |
 | **다이버 장비** | 손전등, 산소통, BCD, 탱크 밴드, 마스크, 오리발, 레귤레이터 | 손전등 on/off 소켓 |
 | **수리 부품** (수집 아이템) | 배터리, 밸브 파이프, 기어, 전선 릴, 퓨즈, 프로펠러 날, 선체 패치, CO2 스크러버 카트리지, 회로 기판, 모터 회전자, 방수액, 구리선, 용접기, 돔 유리 조각 6개 / 유리 가루 | 잠수함 수리 소켓에 그대로 붙음 |
 | **잠수함 — 흰색 Mk2** (메인) | 외부 `SM_Sub2` 3종(게임 진행용 / 망가진 / 수리된) + **전용 선실** `SM_Sub2_Interior` 3종 + 사물함 문·전원 레버 | 수리 지점 8곳, 숨는 사물함 |
@@ -95,7 +95,7 @@ mk.py  →  weather_bake.py  →  build_<소품>.py  →  export_all()
 
 - 작업 씬의 맵 소품은 굽기 전 원본 재질입니다. **뷰포트 셰이딩을 Material Preview**로 두면 구운 결과와 같은 모습이 보입니다.
 - Intel 그래픽에서 화면이 깨지거나 꺼지면 Preferences → System → **GPU Backend = OpenGL**로 바꾸세요.
-- **애니메이션 확인**: `anim_picker.py`를 붙여 열면 3D 화면 오른쪽 사이드바(N 키)에 **"동작" 탭**이 생기고, `DV_Pickup` 같은 이름 버튼을 누르면 그 동작이 반복 재생됩니다(스페이스바 = 멈춤). 명령은 아래 "작업 보조 스크립트" 표 참고.
+- **애니메이션 확인**: `anim_picker.py`를 붙여 열면 3D 화면 오른쪽 사이드바(N 키)에 **"Anim" 탭**이 생기고, Model 목록에서 모델을 고른 뒤 `DV_Pickup` 같은 이름 버튼을 누르면 그 동작이 반복 재생됩니다(스페이스바 = 멈춤). 명령은 아래 "작업 보조 스크립트" 표 참고.
 - 모델이 **분홍색**이면 텍스처를 못 찾은 것 → `fix_texture_paths.py` 실행.
 - `open_view.py`로 열면 대상 모델만 보이는 로컬 뷰입니다. `/` 키로 전체 모델을 봅니다.
 
@@ -111,14 +111,15 @@ mk.py  →  weather_bake.py  →  build_<소품>.py  →  export_all()
   - **다이버 애니메이션 v3** (`build_diver_anims_v3.py`): 기존 9개 수정 + 새 6개 = 15개.
     - 고친 것: 팔이 일자로 뻗던 문제(손 IK 목표가 리그 위치 −3.5m를 무시한 버그), 꼿꼿이 선 떠 있기 → 수평 개구리 트림 자세, 줍기 중 몸이 뒤집히던 것, 수리 패널이 팔 길이보다 멀던 것.
     - 추가: `DV_SwimFast`(도망), `DV_Hit`(피격), `DV_Death`(사망), `DV_Hide_Enter` / `_Idle` / `_Exit`(웅크려 숨기).
-  - **거대 등각류 v3** (`build_isopod_v3.py`): 실물 Bathynomus 형태(다리는 몸 아래, 겹친 판, 머리 옆 납작한 눈). **색은 다시 해야 함**(아래 남은 일).
+  - **거대 등각류 v3** (`build_isopod_v3.py`): 실물 Bathynomus 형태(다리는 몸 아래, 겹친 판, 머리 옆 납작한 눈). 색은 갈색 계열로 재도색 완료.
+  - 거대 등각류 **갈색 재도색**(회색·흰색 제거), 괴물 4종 **수색(`*_Search`)·피격(`*_Hit`)** 애니메이션 추가(`build_monster_anims_extra.py`).
+  - **괴물 3종을 크라켄 수준으로 업그레이드**: 심해 뱀장어 v3(굵은 몸, 갈고리 가시, 푸른 발광점, 호박색 눈 9개, 뼈 16개로 매끄러운 동작), 기간투라 v4(크라켄 피부 색감, 새 대기·헤엄·물기), 거대 등각류 v4(돌기·따개비·흉터, 갈색만). 다시 굽기는 `dev/run_monster.py`.
   - 도구: `anim_picker.py`(버튼으로 애니메이션 보기), `fix_texture_paths.py`(분홍 텍스처 수정), `open_view.py` 로컬 뷰·전체 보기.
 
 **남은 일**
-- **거대 등각류 색 다시 하기 (사용자 지시, 2026-11-20)**: 현재 v3 색(연보라 모브 + 호박 갈색, 다리는 분홍 크림)이 마음에 들지 않음. **회색·흰색 계열은 모두 빼고 갈색 계열로만** 칠할 것 — 등판·옆판·꼬리판·다리·더듬이·배까지 전부. 모양(v3)은 유지하고 색만 수정.
 - 언리얼 프로젝트 선택 후 블루프린트(숨기, 수리 상호작용, 잠수함 상태 교체)
 - 망가진 Mk2 잠수함(외부·선실) 텍스처 굽기 — 진행용·수리된 잠수함은 언리얼 타일링 재질을 슬롯에 입히는 방식 권장
-- 다이버의 다른 동작(사다리 등), 괴물의 수색·피격 애니메이션 — 다이버 피격·사망·숨기·도망은 v3에서 추가됨
+- 다이버의 다른 동작(사다리 등) — 다이버 피격·사망·숨기·도망, 괴물 수색·피격은 추가됨
 - 무거운 모델 LOD (Nanite를 쓰지 않을 경우)
 
 ---
@@ -140,7 +141,8 @@ mk.py  →  weather_bake.py  →  build_<소품>.py  →  export_all()
 | `preview_render.py` | 빌드 직후 모양 확인용 렌더링(재질 단색) | `blender -b --factory-startup Source/DiveGear_Scene.blend --python Source/_tools/dev/preview_render.py -- build_cave.py C:/temp/shots shots.json` |
 | `verify_fbx.py` | FBX를 빈 씬에 다시 불러와 재질·텍스처·삼각형·소켓 검사(+ 구운 텍스처로 렌더링) | `blender -b --factory-startup --python Source/_tools/dev/verify_fbx.py -- SM_SeaCave.fbx --render C:/temp/shots shots.json` |
 | `open_view.py` | Blender 화면을 특정 모델만 보이게 열기(로컬 뷰, 뼈 숨김, Material Preview; `/`로 전체 보기). `-- ALL`이면 모든 모델 | `blender Source/DiveGear_Scene.blend --python Source/_tools/dev/open_view.py -- SeaCave 18 -14 12 0 0.5 1.5` |
-| `anim_picker.py` | 3D 화면 오른쪽 사이드바에 **"동작" 탭** 추가: 다이버·괴물의 애니메이션 이름 버튼을 누르면 그 동작이 반복 재생됨(메뉴 없이 동작 확인) | `blender Source/DiveGear_Scene.blend --python Source/_tools/dev/anim_picker.py --python Source/_tools/dev/open_view.py -- Diver_Rig 2.6 -2.8 1.6 0 -0.2 0.9` |
+| `run_monster.py` | 괴물 하나를 스크립트로 다시 만들고 수색·피격 동작 추가 → 4096 텍스처 굽기 → `SK_*.fbx` → 씬 **사본** 저장(미리보기 렌더도 가능) | `blender -b --factory-startup Source/DiveGear_Scene.blend --python Source/_tools/dev/run_monster.py -- . C:/temp build_eel_v3.py DeepSeaEel_Rig SK_DeepSeaEel_Body DeepSeaEel --export C:/temp/scene_new.blend` |
+| `anim_picker.py` | 3D 화면 오른쪽 사이드바(N)에 **"Anim" 탭** 추가: Model 목록에서 모델을 고르면 화면이 그 모델로 이동하고, 동작 버튼을 누르면 반복 재생(메뉴 없이 동작 확인) | `blender Source/DiveGear_Scene.blend --python Source/_tools/dev/anim_picker.py --python Source/_tools/dev/open_view.py -- Diver_Rig 2.6 -2.8 1.6 0 -0.2 0.9` |
 | `fix_texture_paths.py` | 찾을 수 없는 텍스처(다른 PC 절대경로 등)를 `Textures/`의 같은 이름 파일로 다시 연결(분홍색 해결). **씬을 교체한 뒤 꼭 실행** | `blender -b --factory-startup Source/DiveGear_Scene.blend --python Source/_tools/dev/fix_texture_paths.py` |
 
 `shots.json` 예: `[{"name": "cave_34", "roots": ["SeaCave"], "cam": [18, -14, 12], "look": [0, 0.5, 1.5], "lens": 22}]` (좌표는 모델 기준점 기준, m)
@@ -171,15 +173,10 @@ mk.py  →  weather_bake.py  →  build_<소품>.py  →  export_all()
 
 ### 다음 작업 우선순위 (제안)
 
-0. **거대 등각류 색 수정 (사용자가 다음에 하기로 한 일)** — 회색·흰색 빼고 **갈색 계열만** 사용. 방법:
-   - `Source/_tools/build_isopod_v3.py`의 셰이더 함수 `carapace()`·`underside()`·`legs()`의 색 값(ramp·mix의 RGB)과 `simple_shader(M_spine, ...)` 색을 갈색 계열로 교체. 눈(`compound_eye`)은 어두운 색 유지.
-   - 채도 확인: 지난번 회색으로 보인 원인은 기본 색이 회색에 가까웠기 때문(BaseColor 평균 채도 0.14 → 0.25로 올렸지만 여전히 불만). 갈색이면 채도 0.4 이상을 목표로, 구운 `Textures/T_GiantIsopod_BaseColor.png`의 채도를 numpy로 재서 확인.
-   - 굽기 전에 `BAKE_SIZE=1024`로 빠르게 시험 → 확인 후 4096. 굽는 순서·씬 교체는 아래 "새 맵 소품을 만들 때의 절차"와 같음(드라이버 예: 씬을 연 뒤 mk.py → rig.py → horror.py → horror2.py → monsters_v2_pipeline.py → build_isopod_v3.py 실행, `bake_and_export(4096)`).
-   - 씬 교체 후에는 `Source/_tools/dev/fix_texture_paths.py`로 텍스처 경로를 다시 맞출 것(괴물 텍스처가 원작자 PC 절대경로라 분홍색으로 보이는 문제).
 1. **언리얼 프로젝트 정하기** → 에셋 임포트, 숨기·수리·잠수함 상태 교체 블루프린트 (README_UNREAL 6장에 설계 있음)
 2. 망가진 Mk2 잠수함(외부·선실) 텍스처 굽기 — 진행용·수리된 잠수함은 언리얼 타일링 재질을 슬롯에 입히는 방식
-3. 다이버 추가 동작(사물함 숨기, 사다리, 피격·사망) — 스크립트 키 애니메이션은 품질 한계가 있어 리타게팅(마켓플레이스·Mixamo)이나 Control Rig 권장
-4. 괴물 수색·피격 애니메이션, 무거운 모델 LOD(Nanite를 안 쓸 경우)
+3. 다이버 추가 동작(사다리 등; 숨기·피격·사망·도망은 v3에서 완료) — 스크립트 키 애니메이션은 품질 한계가 있어 리타게팅(마켓플레이스·Mixamo)이나 Control Rig 권장
+4. 무거운 모델 LOD(Nanite를 안 쓸 경우)
 5. 저장소가 커지면 Git LFS 도입
 
 ---

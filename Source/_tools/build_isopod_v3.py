@@ -1,4 +1,4 @@
-# Giant isopod v3 (2026-11-20): a faithful Bathynomus giganteus scaled to ~3 m (replaces v2, whose legs splayed out
+# Giant isopod v3 (2026-11-20; brown recolour + IS_Search / IS_Hit 2026-11-20): a faithful Bathynomus giganteus scaled to ~3 m (replaces v2, whose legs splayed out
 # like a spider, body was a smooth pill, eyes were black balls on the back and colour was flat grey).
 # Faces -Y, crawls on the ground (feet at z = 0). Bone and animation names are the same as v1/v2
 # (is_root / is_body / is_seg1..7 / is_head / is_pleon / is_tail / is_uro{L,R} / is_leg{L,R}{1..7}_{1..3} /
@@ -305,6 +305,7 @@ for f in range(F + 1):
     for (i, sx), (P, names) in LEGS.items():
         kr(names[0], f + 1, bend_q(names[0], Z, sx * D(2.5) * math.sin(math.tau * t + i * 0.9)))
     key(rig.pose.bones["is_body"], f + 1, loc=(0, 0, 0.005 * math.sin(math.tau * t * 2)))
+    key(rig.pose.bones["is_root"], f + 1, loc=(0, 0, 0))
 rig.animation_data.action.frame_range = (1, F + 1)
 
 new_action(rig, "IS_Walk")                       # metachronal wave: phase runs back-to-front, left/right in antiphase
@@ -323,6 +324,7 @@ for f in range(F + 1):
     for k, bn in enumerate(BODY_BONES[1:9]):
         kr(bn, f + 1, bend_q(bn, Z, D(1.0) * math.sin(math.tau * t * 2 - k * 0.5)))
     key(rig.pose.bones["is_body"], f + 1, loc=(0, 0, 0.005 * math.sin(math.tau * t * 2)))
+    key(rig.pose.bones["is_root"], f + 1, loc=(0, 0, 0))
 rig.animation_data.action.frame_range = (1, F + 1)
 
 new_action(rig, "IS_Attack")                     # rears the front body, front legs reach and pin, mouthparts open, ~0.6 m lunge
@@ -346,6 +348,45 @@ for f in range(F + 1):
     uropods(f + 1, f / 15, 1.5 * rear)
     key(rig.pose.bones["is_root"], f + 1, loc=(0, -0.6 * ease((f - 9) / 6), 0))
 rig.animation_data.action.frame_range = (1, F + 1)
+new_action(rig, "IS_Search")                     # stops, lifts the front, sweeps the antennae wide, turns the head side to side
+F = 96
+for f in range(F + 1):
+    t = f / F
+    look = D(7) * math.sin(math.tau * t) + D(2) * math.sin(math.tau * t * 3 + 0.5)
+    lift = 0.5 + 0.5 * math.sin(math.tau * t * 2 - 1.0)
+    for k, bn in enumerate(FRONT):
+        kr(bn, f + 1, bend_q(bn, X, -D(4) * lift) @ bend_q(bn, Z, look * (0.6 + 0.3 * k)))
+    for k, bn in enumerate(BODY_BONES[4:9]):
+        kr(bn, f + 1, bend_q(bn, Z, -look * 0.25))
+    antennae(f + 1, t * 2, 2.4)
+    mouth(f + 1, 0.2 + 0.35 * max(0.0, math.sin(math.tau * t * 6)) ** 4)
+    uropods(f + 1, t * 2, 0.5)
+    for (i, sx), (P, names) in LEGS.items():                                   # front legs feel the floor, the rest shift weight
+        amp = D(8) if i < 3 else D(2.5)
+        ph = math.tau * t * 2 + i * 0.9
+        kr(names[0], f + 1, bend_q(names[0], Z, sx * amp * math.sin(ph)) @ bend_q(names[0], Y, -sx * amp * 0.6 * max(0.0, math.sin(ph))))
+    key(rig.pose.bones["is_body"], f + 1, loc=(0, 0, 0.01 * lift))
+    key(rig.pose.bones["is_root"], f + 1, loc=(0, 0, 0))
+rig.animation_data.action.frame_range = (1, F + 1)
+
+new_action(rig, "IS_Hit")                        # flinch: front curls down, legs pull in, antennae snap back, pushed back, recovers
+F = 30
+for f in range(F + 1):
+    j = ease(f / 3) * (1 - ease((f - 7) / 18))
+    shake = math.sin(math.tau * f / 7) * math.exp(-f / 8)
+    for k, bn in enumerate(FRONT):
+        kr(bn, f + 1, bend_q(bn, X, D(9) * j) @ bend_q(bn, Z, D(4) * shake))
+    for k, bn in enumerate(BODY_BONES[4:10]):
+        kr(bn, f + 1, bend_q(bn, X, D(4) * j))
+    mouth(f + 1, 0.9 * j)
+    antennae(f + 1, f / 10, 0.6 + 2.0 * j)
+    uropods(f + 1, f / 6, 2.0 * j)
+    for (i, sx), (P, names) in LEGS.items():
+        kr(names[0], f + 1, bend_q(names[0], Y, -sx * D(22) * j))
+        kr(names[1], f + 1, bend_q(names[1], Y, -sx * D(30) * j))
+        kr(names[2], f + 1, bend_q(names[2], Y, -sx * D(15) * j))
+    key(rig.pose.bones["is_root"], f + 1, loc=(0, 0.25 * ease(f / 4) * (1 - ease((f - 10) / 18)), 0.03 * j))
+rig.animation_data.action.frame_range = (1, F + 1)
 _act = bpy.data.actions["IS_Walk"]; rig.animation_data.action = _act
 if hasattr(rig.animation_data, "action_slot") and len(_act.slots): rig.animation_data.action_slot = _act.slots[0]
 rig.location = RIG_LOC
@@ -357,51 +398,51 @@ def carapace(mat):
     edge = nb.n("ShaderNodeAttribute", attribute_name="pedge").outputs["Fac"]
     front = nb.n("ShaderNodeAttribute", attribute_name="pfront").outputs["Fac"]
     mott = nb.noise(2.5, 6, 0.6)                                                           # big blotches, strong contrast
-    col_ = nb.ramp(mott.outputs["Fac"], [(0.32, (0.46, 0.3, 0.4)), (0.5, (0.64, 0.45, 0.53)), (0.7, (0.78, 0.6, 0.62))]).outputs[0]   # mauve-lilac
+    col_ = nb.ramp(mott.outputs["Fac"], [(0.32, (0.3, 0.15, 0.06)), (0.5, (0.47, 0.26, 0.1)), (0.7, (0.62, 0.38, 0.17))]).outputs[0]   # dark brown .. chestnut .. tan-brown
     tint = nb_map(nb, nb.noise(0.9, 3, 0.5).outputs["Fac"], 0.42, 0.66)
-    col_ = nb.mix(col_, (0.72, 0.5, 0.24), nb.math("MULTIPLY", tint, 0.7))                  # amber-tan regions
-    col_ = nb.mix(col_, (0.66, 0.4, 0.14), nb.math("MULTIPLY", edge, 0.9))                 # amber-brown margin bands
-    col_ = nb.mix(col_, (0.26, 0.15, 0.18), nb.math("MULTIPLY", front, 0.8))               # dark front strip slid under the plate ahead
+    col_ = nb.mix(col_, (0.6, 0.33, 0.1), nb.math("MULTIPLY", tint, 0.65))                  # rust / ochre regions
+    col_ = nb.mix(col_, (0.25, 0.11, 0.04), nb.math("MULTIPLY", edge, 0.85))                # dark reddish-brown rims
+    col_ = nb.mix(col_, (0.13, 0.06, 0.02), nb.math("MULTIPLY", front, 0.8))               # dark front strip slid under the plate ahead
     spots = nb_map(nb, nb.voronoi(32.0, "F1").outputs["Distance"], 0.06, 0.14, 1.0, 0.0)   # ~2-3 cm speckles
-    col_ = nb.mix(col_, (0.36, 0.2, 0.22), nb.math("MULTIPLY", spots, 0.65))
+    col_ = nb.mix(col_, (0.2, 0.1, 0.04), nb.math("MULTIPLY", spots, 0.65))
     pits = nb_map(nb, nb.voronoi(90.0, "F1").outputs["Distance"], 0.05, 0.13, 1.0, 0.0)   # punctation
-    col_ = nb.mix(col_, (0.3, 0.18, 0.2), nb.math("MULTIPLY", pits, 0.7))
+    col_ = nb.mix(col_, (0.16, 0.08, 0.03), nb.math("MULTIPLY", pits, 0.7))
     silt = nb_map(nb, nb.noise(4.0, 5, 0.65).outputs["Fac"], 0.56, 0.68)                   # sediment patches
-    col_ = nb.mix(col_, (0.5, 0.4, 0.26), nb.math("MULTIPLY", silt, 0.6))
+    col_ = nb.mix(col_, (0.44, 0.28, 0.12), nb.math("MULTIPLY", silt, 0.6))
     scr = nb_map(nb, nb.noise(30.0, 2, 0.5, vec=nb.mapping(scale=(6, 0.4, 6))).outputs["Fac"], 0.66, 0.72)   # fine scratches
-    col_ = nb.mix(col_, (0.8, 0.76, 0.72), nb.math("MULTIPLY", scr, 0.35))
+    col_ = nb.mix(col_, (0.66, 0.42, 0.2), nb.math("MULTIPLY", scr, 0.35))                  # light tan scratches (no white)
     gran = nb.noise(60.0, 4, 0.6)
     rough = nb.math("ADD", nb_map(nb, mott.outputs["Fac"], 0.3, 0.7, 0.24, 0.4), nb.math("MULTIPLY", silt, 0.4))
     h = nb.math("SUBTRACT", nb.math("MULTIPLY", gran.outputs["Fac"], 0.35), nb.math("ADD", nb.math("MULTIPLY", pits, 0.6), nb.math("MULTIPLY", spots, 0.25)), clamp=False)
     growth = nb.noise(22.0, 3, 0.5, vec=nb.mapping(scale=(0.25, 8, 0.25)))                 # growth lines across each segment
     h = nb.math("ADD", h, nb.math("MULTIPLY", growth.outputs["Fac"], 0.35), clamp=False)
     nb_finish_full(nb, col_, rough, h, bump=0.8, dist=0.008, spec=0.55)
-    mat.diffuse_color = (0.64, 0.45, 0.5, 1)
+    mat.diffuse_color = (0.47, 0.26, 0.1, 1)
 
 
 def underside(mat):
     nb = NB(mat)
     m = nb.noise(8.0, 5, 0.6)
-    col_ = nb.ramp(m.outputs["Fac"], [(0.3, (0.8, 0.6, 0.5)), (0.7, (0.92, 0.78, 0.62))]).outputs[0]   # warm cream
+    col_ = nb.ramp(m.outputs["Fac"], [(0.3, (0.5, 0.29, 0.12)), (0.7, (0.64, 0.4, 0.18))]).outputs[0]   # mid brown
     rid = nb.noise(20.0, 3, 0.5, vec=nb.mapping(scale=(0.3, 6, 0.3)))
-    col_ = nb.mix(col_, (0.6, 0.5, 0.45), nb.math("MULTIPLY", nb_map(nb, rid.outputs["Fac"], 0.5, 0.65), 0.5))
+    col_ = nb.mix(col_, (0.34, 0.18, 0.07), nb.math("MULTIPLY", nb_map(nb, rid.outputs["Fac"], 0.5, 0.65), 0.5))
     rough = nb_map(nb, m.outputs["Fac"], 0.3, 0.7, 0.3, 0.45)
     h = nb.math("ADD", nb.math("MULTIPLY", rid.outputs["Fac"], 0.5), nb.math("MULTIPLY", nb.noise(40.0, 5, 0.6).outputs["Fac"], 0.3), clamp=False)
     nb_finish_full(nb, col_, rough, h, bump=0.35, dist=0.006, spec=0.5)
-    mat.diffuse_color = (0.8, 0.7, 0.62, 1)
+    mat.diffuse_color = (0.57, 0.34, 0.15, 1)
 
 
 def legs(mat):
     nb = NB(mat)
     m = nb.noise(10.0, 5, 0.6)
-    col_ = nb.ramp(m.outputs["Fac"], [(0.3, (0.76, 0.56, 0.54)), (0.7, (0.9, 0.74, 0.64))]).outputs[0]   # pale, slightly translucent cream-lilac
+    col_ = nb.ramp(m.outputs["Fac"], [(0.3, (0.44, 0.24, 0.1)), (0.7, (0.6, 0.37, 0.16))]).outputs[0]   # brown
     rings = nb.noise(60.0, 2, 0.5, vec=nb.mapping(scale=(0.2, 0.2, 6)))
-    col_ = nb.mix(col_, (0.5, 0.42, 0.38), nb.math("MULTIPLY", nb_map(nb, rings.outputs["Fac"], 0.55, 0.7), 0.55))
-    col_ = nb.mix(col_, (0.72, 0.48, 0.24), nb.math("MULTIPLY", nb_map(nb, nb.noise(3.0, 3, 0.5).outputs["Fac"], 0.45, 0.65), 0.45))
+    col_ = nb.mix(col_, (0.24, 0.12, 0.05), nb.math("MULTIPLY", nb_map(nb, rings.outputs["Fac"], 0.55, 0.7), 0.55))
+    col_ = nb.mix(col_, (0.58, 0.32, 0.1), nb.math("MULTIPLY", nb_map(nb, nb.noise(3.0, 3, 0.5).outputs["Fac"], 0.45, 0.65), 0.45))
     spk = nb_map(nb, nb.voronoi(70.0, "F1").outputs["Distance"], 0.05, 0.12, 1.0, 0.0)
-    col_ = nb.mix(col_, (0.36, 0.3, 0.3), nb.math("MULTIPLY", spk, 0.5))
+    col_ = nb.mix(col_, (0.2, 0.1, 0.04), nb.math("MULTIPLY", spk, 0.5))
     nb_finish_full(nb, col_, 0.33, m.outputs["Fac"], bump=0.25, dist=0.004, spec=0.55)
-    mat.diffuse_color = (0.74, 0.65, 0.6, 1)
+    mat.diffuse_color = (0.52, 0.3, 0.13, 1)
 
 
 def compound_eye(mat):
@@ -409,16 +450,16 @@ def compound_eye(mat):
     fac = nb.voronoi(380.0, "DISTANCE_TO_EDGE")
     facet = nb_map(nb, fac.outputs["Distance"], 0.0, 0.06)
     shine = nb.noise(4.0, 3, 0.5)
-    base = nb.ramp(shine.outputs["Fac"], [(0.3, (0.035, 0.03, 0.04)), (0.7, (0.09, 0.075, 0.085))]).outputs[0]
-    c = nb.mix((0.16, 0.14, 0.15), base, facet)                                            # lighter facet borders, not a black blob
+    base = nb.ramp(shine.outputs["Fac"], [(0.3, (0.04, 0.02, 0.008)), (0.7, (0.09, 0.05, 0.02))]).outputs[0]
+    c = nb.mix((0.17, 0.09, 0.04), base, facet)                                            # lighter facet borders, not a black blob
     glint = nb.mix((0, 0, 0), (0.035, 0.04, 0.03), nb.math("MULTIPLY", facet, nb_map(nb, shine.outputs["Fac"], 0.5, 0.75)))   # eyeshine
     nb_finish_full(nb, c, 0.08, facet, bump=0.35, dist=0.0015, emit=glint, emit_strength=1.0, spec=0.85)
-    mat.diffuse_color = (0.08, 0.07, 0.08, 1)
+    mat.diffuse_color = (0.08, 0.045, 0.02, 1)
 
 
 carapace(M_back); underside(M_belly); legs(M_leg); compound_eye(M_eye)
-simple_shader(M_spine, (0.48, 0.38, 0.27), 0.3, noise_scale=40, var=0.4, bump=0.2)
-M_spine.diffuse_color = (0.48, 0.38, 0.27, 1)
+simple_shader(M_spine, (0.33, 0.17, 0.06), 0.3, noise_scale=40, var=0.4, bump=0.2)
+M_spine.diffuse_color = (0.33, 0.17, 0.06, 1)
 for m_ in bpy.data.materials:
     if m_.name.startswith("M_IsR_"): m_.use_fake_user = True
 IS_INFO = {"tris": sum(len(p.vertices) - 2 for p in body.data.polygons), "bones": len(rig.data.bones),

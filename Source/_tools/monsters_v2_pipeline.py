@@ -62,3 +62,51 @@ def finalize(only=None):
         bm.to_mesh(o.data); bm.free()
         out[sk] = export_skeletal(bpy.data.objects[rig_name], sk, with_anims=True)
     return out
+
+
+def bake_monster(body_name, prefix, size=4096, uv_scale=None, rig_name=None):
+    """Generic version of build_isopod_v3.bake_and_export (2026-11-20): smart-project UVs, optional per-material texel
+    scale (uv_scale = {material name: factor}), bake BaseColor (x baked AO) / Normal / Roughness / Emissive in the rest
+    pose into Textures/T_<prefix>_*.png, then finalize (swap to M_<prefix>, export SK_<prefix>.fbx with all actions)."""
+    import os, numpy as np
+    uv_prep([body_name])
+    o = bpy.data.objects[body_name]; rig_ = bpy.data.objects[rig_name] if rig_name else o.parent
+    rig_.data.pose_position = "REST"
+    bpy.ops.object.select_all(action="DESELECT"); o.select_set(True); bpy.context.view_layer.objects.active = o
+    if uv_scale:
+        bpy.ops.object.mode_set(mode="EDIT"); bpy.ops.mesh.select_all(action="SELECT"); bpy.ops.uv.select_all(action="SELECT")
+        bpy.ops.uv.average_islands_scale()
+        bm = bmesh.from_edit_mesh(o.data); uvl = bm.loops.layers.uv.active
+        SC = {i: uv_scale.get(m.name, 1.0) for i, m in enumerate(o.data.materials)}
+        for f in bm.faces:
+            for l in f.loops: l[uvl].uv *= SC[f.material_index]
+        bmesh.update_edit_mesh(o.data)
+        bpy.ops.uv.pack_islands(rotate=True, margin=0.002)
+        bpy.ops.object.mode_set(mode="OBJECT")
+    scn = bpy.context.scene; scn.render.engine = "CYCLES"; scn.cycles.device = "CPU"
+    scn.render.bake.margin = 8; scn.render.bake.use_clear = True
+    if scn.world: scn.world.light_settings.distance = 0.25
+    out_dir = os.path.join(OUT_DIR, "Textures"); os.makedirs(out_dir, exist_ok=True)
+    passes = [("BaseColor", "DIFFUSE", "sRGB"), ("Normal", "NORMAL", "Non-Color"), ("Roughness", "ROUGHNESS", "Non-Color"),
+              ("Emissive", "EMIT", "sRGB"), ("AO", "AO", "Non-Color")]
+    imgs = {l: bpy.data.images.new(f"T_{prefix}_{l}", size, size, alpha=False) for l, _, _ in passes}
+    for l, _, cs in passes: imgs[l].colorspace_settings.name = cs
+    nodes = []
+    for s in o.material_slots:
+        n = s.material.node_tree.nodes.new("ShaderNodeTexImage"); n.name = "_bake"; s.material.node_tree.nodes.active = n; nodes.append(n)
+    for l, bt, _ in passes:
+        scn.cycles.samples = 16 if bt == "AO" else 4
+        for n in nodes: n.image = imgs[l]; n.id_data.nodes.active = n
+        kw = dict(pass_filter={"COLOR"}) if bt == "DIFFUSE" else (dict(normal_space="TANGENT") if bt == "NORMAL" else {})
+        bpy.ops.object.bake(type=bt, **kw); print("BAKED", l, flush=True)
+    for n in nodes: n.id_data.nodes.remove(n)
+    px = size * size * 4
+    b = np.empty(px, np.float32); imgs["BaseColor"].pixels.foreach_get(b)
+    a = np.empty(px, np.float32); imgs["AO"].pixels.foreach_get(a)
+    b = b.reshape(-1, 4); b[:, :3] *= 0.5 + 0.5 * a.reshape(-1, 4)[:, :1]
+    imgs["BaseColor"].pixels.foreach_set(b.ravel())
+    for l in ("BaseColor", "Normal", "Roughness", "Emissive"):
+        p = os.path.join(out_dir, f"T_{prefix}_{l}.png"); imgs[l].filepath_raw = p; imgs[l].file_format = "PNG"; imgs[l].save()
+    bpy.data.images.remove(imgs["AO"])
+    rig_.data.pose_position = "POSE"
+    return finalize([body_name])

@@ -4,7 +4,7 @@
 > 팀원과 팀원이 쓰는 AI가 함께 읽는 것을 전제로 작성했습니다.
 > AI 에이전트는 [7. AI 에이전트용 에셋 데이터](#7-ai-에이전트용-에셋-데이터)의 JSON을 기준 데이터로 사용하세요.
 
-- 마지막 업데이트: 2026-11-20 (다이버 애니메이션 v3: 9개 수정 + 도망·피격·사망·숨기 6개 추가 · 거대 등각류 v3 재제작(실물 충실) · 맵 소품: 테트라포드 단독·방파제·해저 동굴·난파선·고래 뼈대·브라인 호수 신규 — 썩은 고래 사체는 뼈대로 교체, 흰색 Mk2 전용 선실 3종 + 사물함 문·전원 레버. Mk3 "만타"는 삭제 — 파일은 `Source/_backup_2026-11-18_mk3_removed/`)
+- 마지막 업데이트: 2026-11-20 (괴물 3종 크라켄 수준 업그레이드: 뱀장어 v3·기간투라 v4·등각류 v4 · 거대 등각류 갈색 재도색 · 괴물 4종 수색·피격 애니메이션 추가 · 다이버 애니메이션 v3: 9개 수정 + 도망·피격·사망·숨기 6개 추가 · 거대 등각류 v3 재제작(실물 충실) · 맵 소품: 테트라포드 단독·방파제·해저 동굴·난파선·고래 뼈대·브라인 호수 신규 — 썩은 고래 사체는 뼈대로 교체, 흰색 Mk2 전용 선실 3종 + 사물함 문·전원 레버. Mk3 "만타"는 삭제 — 파일은 `Source/_backup_2026-11-18_mk3_removed/`)
 - 이전: 2026-11-16 (안팎 모두 새 설계한 잠수함 Mk3 "만타" 3종 + 전용 선실·부품, 새 디자인 잠수함 Mk2 3종, 기존 잠수함 전체 녹슨 버전, 돔 유리 조각 6개 수집 방식, 추가 부품·맵 소품 6종, 잠수함 망가진/수리된 버전, 수리 부품 4종·수리 지점 총 8곳, 선실 디테일, 다이버 애니메이션 v2)
 - 이전: 2026-11-09 (뱀장어 v2, 기간투라 v3 괴물화 버전으로 새로 제작. 뼈대·애니메이션은 그대로)
 - 제작 도구: Blender 5.2.3 LTS (Claude + Blender MCP로 제작)
@@ -308,10 +308,10 @@ FBX에는 기본 색, 금속성, 거칠기만 들어갑니다. 아래 효과는 
 | FBX | 크기 | 뼈 | 삼각형 | 애니메이션 (24fps) | 유의사항 |
 |---|---|---|---|---|---|
 | `SK_Diver` 주인공 다이버 (v2) | 키 182cm(헤드램프 포함, T-포즈), 팔 폭 174cm, 오리발 포함 앞뒤 95cm | 23 | 33,280 | **v3 (2026-11-20), 15개**: `DV_SwimIdle`(96f, 반복), `DV_Swim`(56f, 반복, 개구리차기), `DV_SwimFast`(28f, 반복, 도망), `DV_Pickup`(72f), `DV_Repair_Start`(24f) / `_LoopA`(48f) / `_LoopB`(36f) / `_LoopC`(36f) / `_End`(24f), `DV_Install`(48f), `DV_Hit`(28f), `DV_Death`(84f), `DV_Hide_Enter`(30f) / `_Idle`(96f, 반복) / `_Exit`(24f) — 그 외 동작은 마네킹 리타게팅 | 뼈 이름이 **UE 마네킹과 같음**. 루트 본 `root`는 발바닥 중앙(원점). 검은 드라이슈트(주황 어깨·옆구리 패널, 반사 테이프) + **장비 일체형**(아래 참고). 재질 1개(`M_Diver`) + 4096 텍스처 4장. |
-| `SK_Gigantura` 기간투라 | 길이 385cm, 높이 108cm(등 가시 포함) | 15 | 98,470 | `GT_Swim`(33f, 반복), `GT_Idle`(65f, 반복), `GT_Bite`(25f) | 루트 본 `gt_root`가 몸 중심. 재질 1개(`M_Gigantura`) + 4096 텍스처 4장. |
-| `SK_DeepSeaEel` 심해 뱀장어 | 길이 472cm | 15 | 68,704 | `EEL_Swim`(41f, 반복), `EEL_Idle`(81f, 반복), `EEL_Bite`(31f) | 루트 본 `eel_root`가 머리 뒤. 재질 1개(`M_DeepSeaEel`) + 4096 텍스처 4장. |
-| `SK_Kraken` 크라켄 | 전체 길이 약 600cm(외투막 230cm + 다리 약 300cm, 촉수 400cm), 폭 360cm | 69 | 130,171 | `KR_Idle`(81f, 반복), `KR_Swim`(41f, 반복), `KR_Attack`(31f) | 루트 본 `kr_root`가 머리와 외투막 경계. **다리 쪽이 앞(-Y)**. 다리 8개 × 뼈 6개, 촉수 2개 × 뼈 8개(`kr_arm1_1`…, `kr_tentL_1`…). 재질 1개(`M_Kraken`) + 4096 텍스처 4장. 삼각형이 많으니 LOD 필수. |
-| `SK_GiantIsopod` 거대 등각류 (v3) | 몸길이 300cm(꼬리 가시 포함 320cm), 폭 189cm(다리 포함, 몸통 125cm), 높이 54cm | 69 | 55,794 | `IS_Idle`(97f, 반복), `IS_Walk`(37f, 반복, 제자리), `IS_Attack`(31f) | **바닥을 기어다니는 타입**. 루트 본 `is_root`가 발바닥 높이(z=0) 몸 중앙. 다리 7쌍 × 뼈 3개(`is_legL1_1`…), 더듬이 2 × 5, 턱다리 2 × 2(`is_clawL_1`…), 꼬리다리 `is_uroL/R`. 재질 1개(`M_GiantIsopod`) + 4096 텍스처 4장. |
+| `SK_Gigantura` 기간투라 (v4) | 길이 385cm, 높이 108cm(등 가시 포함) | 15 | 98,470 | `GT_Swim`(37f, 반복), `GT_Idle`(97f, 반복), `GT_Bite`(31f), `GT_Search`(97f, 반복), `GT_Hit`(31f) | 루트 본 `gt_root`가 몸 중심. 재질 1개(`M_Gigantura`) + 4096 텍스처 4장. |
+| `SK_DeepSeaEel` 심해 뱀장어 (v3) | 길이 490cm(꼬리 미끼 포함), 폭 41cm, 높이 51cm | 19 | 95,308 | `EEL_Swim`(49f, 반복), `EEL_Idle`(97f, 반복), `EEL_Bite`(37f), `EEL_Search`(97f, 반복), `EEL_Hit`(31f) | 루트 본 `eel_root`가 머리 뒤. 등뼈 `eel_spine_01`~`_16`(v2는 12개). 재질 1개(`M_DeepSeaEel`) + 4096 텍스처 4장. |
+| `SK_Kraken` 크라켄 | 전체 길이 약 600cm(외투막 230cm + 다리 약 300cm, 촉수 400cm), 폭 360cm | 69 | 130,171 | `KR_Idle`(81f, 반복), `KR_Swim`(41f, 반복), `KR_Attack`(31f), `KR_Search`(97f, 반복), `KR_Hit`(31f) | 루트 본 `kr_root`가 머리와 외투막 경계. **다리 쪽이 앞(-Y)**. 다리 8개 × 뼈 6개, 촉수 2개 × 뼈 8개(`kr_arm1_1`…, `kr_tentL_1`…). 재질 1개(`M_Kraken`) + 4096 텍스처 4장. 삼각형이 많으니 LOD 필수. |
+| `SK_GiantIsopod` 거대 등각류 (v4) | 몸길이 300cm(꼬리 가시 포함 320cm), 폭 189cm(다리 포함, 몸통 125cm), 높이 54cm | 69 | 68,718 | `IS_Idle`(97f, 반복), `IS_Walk`(37f, 반복, 제자리), `IS_Attack`(31f), `IS_Search`(97f, 반복), `IS_Hit`(31f) | **바닥을 기어다니는 타입**. 루트 본 `is_root`가 발바닥 높이(z=0) 몸 중앙. 다리 7쌍 × 뼈 3개(`is_legL1_1`…), 더듬이 2 × 5, 턱다리 2 × 2(`is_clawL_1`…), 꼬리다리 `is_uroL/R`. 재질 1개(`M_GiantIsopod`) + 4096 텍스처 4장. |
 
 ### 괴물 디자인 (v2, 2026-11-09)
 
@@ -321,7 +321,16 @@ FBX에는 기본 색, 금속성, 거칠기만 들어갑니다. 아래 효과는 
 - **심해 뱀장어(펠리컨장어)**: 검고 점액질로 번들거리는 채찍 같은 몸, 주둥이 끝의 작고 탁한 눈, 몸 길이의 1/7에 달하는 긴 턱과 그 사이에 늘어진 **주름진 막 주머니**(핏줄이 비침, 안쪽은 젖은 살), 양턱의 가는 바늘 이빨, 등·배를 따라 이어진 지느러미 막, 꼬리 끝 미끼 = **분홍빛으로 빛나는 살덩이에 박혀 각자 다른 곳을 노려보는 눈알 5개**와 늘어진 실 촉수
 - **크라켄 (2026-11-09 신규)**: 기간투라 v3와 같은 괴물화 스타일. 종양 혹과 **뼈 가시 줄**이 솟은 주름진 외투막, 외투막의 발톱 찢김 3줄, 찢어진 꼬리 지느러미, 깊은 눈구멍 속 **가로 동공의 빛나는 호박색 눈 2개**와 머리 위 작은 눈 6개, 끝이 소용돌이처럼 말린 굵은 다리 8개(사이에 막), 긴 촉수 2개와 끝의 곤봉, **테두리에 갈고리 이빨이 난 빨판**, 다리 중심의 검은 부리와 이빨 고리 입.
   - 애니메이션: `KR_Idle` 다리가 천천히 꿈틀거림. `KR_Swim` 다리를 오므렸다 펴며 우산처럼 헤엄. `KR_Attack` 1~9f 다리를 활짝 펼침 → 10~17f 앞으로 약 100cm 덮치며 다리로 움켜쥠(루트 모션, `kr_root`) → 이후 천천히 풀림. 잡기 판정은 약 16f.
-- **거대 등각류 v3 (2026-11-20 재제작, 실제 등각류에 충실)**: 실제 심해 대왕 등각류(*Bathynomus giganteus*)를 약 3m로 키운 모습. 납작한 타원 방패형 몸통, 7장의 가슴판이 뒤쪽 판 위로 4cm씩 계단처럼 겹치고 옆판(epimera)이 아래로 늘어져 뒤로 갈수록 뒤쪽으로 뾰족해짐. 몸보다 좁은 머리가 1번 판 앞에 끼워져 있고, 머리 양옆 가장자리를 따라 납작한 타원형 겹눈. 다리는 **몸 아래에 숨겨진** 구조(굵은 밑마디는 몸 아래, 무릎은 껍질 가장자리, 끝마디는 바닥으로 거의 수직; 앞 3쌍은 앞쪽, 뒤 4쌍은 뒤쪽). 넓고 둥근 꼬리판에 가운데 낮은 용골과 가시 11개, 노 모양 꼬리다리. 색은 연보라 모브색 + 호박빛 갈색 얼룩·가장자리 띠, 미세한 점 구멍, AO(틈새 그늘)를 BaseColor에 구워 넣음. 판 앞쪽 어두운 띠·누런 가장자리 띠·2~3cm 반점·점 구멍·퇴적물 얼룩, 등판과 눈은 텍스처 면적 2배(UV 재배치). 공격(`IS_Attack`)은 앞몸을 들고 앞다리 3쌍을 뻗은 뒤 약 60cm 덮침(16프레임 즈음). 제작 스크립트 `Source/_tools/build_isopod_v3.py` (v2 `build_isopod_v2.py`는 참고용으로 남김), v1 백업 `Source/_backup_2026-11-19_isopod_v1/`.
+- **거대 등각류 v3 (2026-11-20 재제작, 실제 등각류에 충실)**: 실제 심해 대왕 등각류(*Bathynomus giganteus*)를 약 3m로 키운 모습. 납작한 타원 방패형 몸통, 7장의 가슴판이 뒤쪽 판 위로 4cm씩 계단처럼 겹치고 옆판(epimera)이 아래로 늘어져 뒤로 갈수록 뒤쪽으로 뾰족해짐. 몸보다 좁은 머리가 1번 판 앞에 끼워져 있고, 머리 양옆 가장자리를 따라 납작한 타원형 겹눈. 다리는 **몸 아래에 숨겨진** 구조(굵은 밑마디는 몸 아래, 무릎은 껍질 가장자리, 끝마디는 바닥으로 거의 수직; 앞 3쌍은 앞쪽, 뒤 4쌍은 뒤쪽). 넓고 둥근 꼬리판에 가운데 낮은 용골과 가시 11개, 노 모양 꼬리다리. 색은 **갈색 계열만**(진한 갈색·밤색·황갈색 얼룩, 짙은 적갈색 판 가장자리, 회색·흰색 없음 — 2026-11-20 재도색), 미세한 점 구멍, AO(틈새 그늘)를 BaseColor에 구워 넣음. 판 앞쪽 어두운 띠·누런 가장자리 띠·2~3cm 반점·점 구멍·퇴적물 얼룩, 등판과 눈은 텍스처 면적 2배(UV 재배치). 공격(`IS_Attack`)은 앞몸을 들고 앞다리 3쌍을 뻗은 뒤 약 60cm 덮침(16프레임 즈음). 제작 스크립트 `Source/_tools/build_isopod_v3.py` (v2 `build_isopod_v2.py`는 참고용으로 남김), v1 백업 `Source/_backup_2026-11-19_isopod_v1/`.
+- **괴물 3종 크라켄 수준으로 업그레이드 (2026-11-20)**: 사용자가 크라켄을 가장 좋은 퀄리티로 꼽아, 같은 기법을 나머지에 적용했습니다. 크라켄의 비결 = ① 몸에 직접 새긴 혹·상처·눈구멍 + 갈고리 가시 줄 + 큰 눈/작은 눈 여러 개, ② 보랏빛 검정 → 붉은 옆구리 바탕 위에 얼룩·색소 반점(chromatophore)·핏줄·흉터·상처 속 생살을 겹친 피부, ③ 빛나는 호박색 눈, ④ 부위마다 시간차를 둔 겹친 움직임.
+  - **심해 뱀장어 v3** (`build_eel_v3.py`, 뼈대부터 새로): 몸통 1.5배 굵게, 혹·발톱 상처·눈구멍을 몸에 새김, 등 갈고리 가시 줄, 옆구리 **푸르게 빛나는 발광점** 줄(좌우 각 22개), 세로 동공 호박색 큰 눈 2개 + 작은 눈 7개, 더 큰 송곳니, 주름진 턱 주머니·꼬리 미끼는 유지. 등뼈 12 → **16개**. `EEL_Idle`/`EEL_Swim`/`EEL_Bite` 다시 만듦(머리를 몸 물결 반대로 보정해 덜 흔들림, 물기는 S자로 감았다가 약 95cm 덮치며 턱 70° 벌림).
+  - **기간투라 v4** (`build_gigantura_v4.py` = v3 모양 + 바뀐 부분): 피부를 크라켄 색감으로(거의 검정 → 붉은 기 도는 보랏빛, 색소 반점, 붉은 핏줄) — 두개골·가시·눈이 드러남. `GT_Idle`/`GT_Swim`/`GT_Bite` 다시 만듦(가슴지느러미 번갈아 젓기, 턱 호흡, 물기는 등을 젖히고 입을 벌린 뒤 약 75cm 덮치고 머리를 흔듦).
+  - **거대 등각류 v4** (`build_isopod_v4.py` = v3 + 표면 디테일): 판 뒷모서리의 불규칙한 돌기 줄, 꼬리판 알갱이, 따개비 무리 4곳, 발톱 흉터 2곳(옅은 테두리 + 짙은 적갈색 속), 짙은 갈색 반점. **갈색만** 사용.
+  - 다시 굽기: `Source/_tools/dev/run_monster.py`(빌드 → 수색·피격 추가 → 4096 굽기 → FBX → 씬 사본 저장). 공용 굽기 함수는 `monsters_v2_pipeline.py`의 `bake_monster()`. 이전 파일은 `Source/_backup_2026-11-20_monsters_v3/`.
+- **괴물 수색·피격 애니메이션 (2026-11-20 추가)**: 4종 모두 `<접두사>_Search`(97f 반복)와 `<접두사>_Hit`(31f)를 넣었습니다. 기간투라·뱀장어·크라켄은 `Source/_tools/build_monster_anims_extra.py`(실행: `mk.py` → `rig.py` → 이 파일 → `export_skeletal`), 등각류는 `build_isopod_v3.py` 안에 있습니다.
+  - `*_Search`: 술래가 다이버를 찾을 때(AI 상태 "수색"). 기간투라·뱀장어는 제자리에서 머리를 좌우로 휘저으며 입을 벌렸다 닫음(냄새 맡기), 크라켄은 다리를 하나씩 뻗어 더듬고 긴 촉수 2개로 앞을 휘저음, 등각류는 앞몸을 들고 더듬이를 크게 휘두르며 앞다리로 바닥을 더듬음.
+  - `*_Hit`: 손전등·공격에 맞았을 때(경직). 3f가 충격 프레임, 약 30~40cm 뒤로 밀렸다가 제자리로 돌아옴(루트 이동이 0으로 끝나므로 루트 모션 없이 써도 됨). 기간투라·뱀장어는 몸을 C자로 휘며 입을 딱 벌렸다 닫음, 크라켄은 다리를 모두 안으로 오므리고 외투막을 움츠림, 등각류는 앞몸을 숙이고 다리를 접으며 더듬이를 뒤로 젖힘.
+  - **함께 고친 버그**: 기존 대기·헤엄 동작(`GT_Idle/Swim`, `EEL_Idle/Swim`, `KR_Idle/Swim`, `IS_Idle/Walk`)에 루트 위치 키가 없어서, 내보낼 때 공격 동작의 돌진 위치(약 -40~-60cm)가 남을 수 있었음 → 루트 위치를 0으로 키 고정.
 - *(구버전 v1 설명, 참고용)* **거대 등각류 (2026-11-09 신규, 심해 쥐며느리 괴물)**: 바닥·동굴 벽·난파선을 **기어다니는 술래**. 때 묻은 누런 갑각판이 겹겹이 겹친 몸(판 뒷모서리마다 가시, 금, 녹 같은 핏자국, 따개비), 깨진 판 사이로 비어져 나온 생살, 머리 양옆의 검게 번들거리는 커다란 겹눈, 가시 돋은 다리 14개(끝은 검은 발톱), 긴 채찍 더듬이, 입 양옆의 갈고리 집게와 이빨 고리 입, 배 쪽 알주머니에 박힌 **연두색으로 빛나는 알 44개**(뒤집히거나 앞몸을 들 때 보임).
   - 애니메이션: `IS_Idle` 더듬이가 흔들리고 집게가 경련. `IS_Walk` 다리 14개가 앞뒤로 물결치는 제자리 걸음(이동은 Character Movement로). `IS_Attack` 1~9f 앞몸을 치켜들고 집게를 벌림 → 10~15f 내리꽂으며 약 60cm 덮침(루트 모션, `is_root`). 물기 판정 약 14f.
   - 언리얼: 땅을 걷는 캐릭터라 **Character Movement의 Walking 모드**를 쓰고, 캡슐은 납작하니 반지름 약 60cm·반높이 약 40cm로 시작하세요. 벽·천장 타기를 하려면 별도 로직이 필요합니다.
@@ -872,33 +881,37 @@ AI 에이전트를 위한 기준 데이터입니다. 단위는 cm, 축은 Blende
      "textures": ["Textures/T_Diver_BaseColor.png","Textures/T_Diver_Normal.png (OpenGL, flip green in UE)","Textures/T_Diver_Roughness.png","Textures/T_Diver_Emissive.png"],
      "slots": ["M_Diver"], "integrated_gear": ["full-face mask + hood + headlamp","steel tank + valve","backplate + wing + harness","hoses + SPG","dive computer (left wrist)","knife (right calf)","thigh pockets","knee pads","fins"],
      "sockets_to_add": {"SM_DiveLight.fbx": "hand_r (palm, lens along fingers)", "HeadlampSpot": "head (approx 0,-8,+23 cm, facing -Y)"}},
-    {"file": "SK_Gigantura.fbx", "type": "skeletal", "role": "enemy", "length_cm": 385, "facing": "Blender -Y", "bones": 15, "tris": 98470,
+    {"file": "SK_Gigantura.fbx", "type": "skeletal", "role": "enemy", "length_cm": 385, "facing": "Blender -Y", "bones": 15, "tris": 98470, "version": "v4 (2026-11-20)",
      "material": "M_Gigantura", "textures": ["Textures/T_Gigantura_BaseColor.png","Textures/T_Gigantura_Normal.png (OpenGL, flip green in UE)","Textures/T_Gigantura_Roughness.png","Textures/T_Gigantura_Emissive.png"],
      "root_bone": "gt_root (body center)", "jaw_bone": "gt_jaw",
-     "animations": [{"name": "GT_Swim", "frames": 33, "loop": true}, {"name": "GT_Idle", "frames": 65, "loop": true},
-                    {"name": "GT_Bite", "frames": 25, "loop": false, "root_motion_cm": 75, "bite_close_frame": 13}],
+     "animations": [{"name": "GT_Swim", "frames": 37, "loop": true}, {"name": "GT_Idle", "frames": 97, "loop": true},
+                    {"name": "GT_Bite", "frames": 31, "loop": false, "root_motion_cm": 75, "bite_close_frame": 13},
+                    {"name": "GT_Search", "frames": 97, "loop": true}, {"name": "GT_Hit", "frames": 31, "loop": false, "impact_frame": 3}],
      "slots": ["M_Gigantura"],
      "movement": "Flying / FloatingPawnMovement"},
-    {"file": "SK_DeepSeaEel.fbx", "type": "skeletal", "role": "enemy", "length_cm": 472, "facing": "Blender -Y", "bones": 15, "tris": 68704,
+    {"file": "SK_DeepSeaEel.fbx", "type": "skeletal", "role": "enemy", "length_cm": 490, "facing": "Blender -Y", "bones": 19, "tris": 95308, "version": "v3 (2026-11-20)",
      "material": "M_DeepSeaEel", "textures": ["Textures/T_DeepSeaEel_BaseColor.png","Textures/T_DeepSeaEel_Normal.png (OpenGL, flip green in UE)","Textures/T_DeepSeaEel_Roughness.png","Textures/T_DeepSeaEel_Emissive.png"],
      "root_bone": "eel_root (behind head)", "jaw_bone": "eel_jaw",
-     "animations": [{"name": "EEL_Swim", "frames": 41, "loop": true}, {"name": "EEL_Idle", "frames": 81, "loop": true},
-                    {"name": "EEL_Bite", "frames": 31, "loop": false, "root_motion_cm": 95, "bite_close_frame": 16}],
+     "animations": [{"name": "EEL_Swim", "frames": 49, "loop": true}, {"name": "EEL_Idle", "frames": 97, "loop": true},
+                    {"name": "EEL_Bite", "frames": 37, "loop": false, "root_motion_cm": 95, "bite_close_frame": 16},
+                    {"name": "EEL_Search", "frames": 97, "loop": true}, {"name": "EEL_Hit", "frames": 31, "loop": false, "impact_frame": 3}],
      "slots": ["M_DeepSeaEel"],
-     "notes": ["tail-tip lure: add skeleton socket at end of eel_spine_12 + pink PointLight"], "movement": "Flying / FloatingPawnMovement"},
+     "notes": ["tail-tip lure: add skeleton socket at end of eel_spine_16 + pink PointLight", "blue photophores + amber eyes via emissive texture"], "movement": "Flying / FloatingPawnMovement"},
     {"file": "SK_Kraken.fbx", "type": "skeletal", "role": "enemy", "length_cm": 600, "width_cm": 360, "facing": "Blender -Y (arms forward)", "bones": 69, "tris": 130171,
      "material": "M_Kraken", "textures": ["Textures/T_Kraken_BaseColor.png","Textures/T_Kraken_Normal.png (OpenGL, flip green in UE)","Textures/T_Kraken_Roughness.png","Textures/T_Kraken_Emissive.png"],
      "root_bone": "kr_root (head/mantle joint)", "bone_groups": {"head": "kr_head", "mantle": ["kr_mantle_01","kr_mantle_02","kr_mantle_03"],
        "arms": "kr_arm1..8_1..6", "tentacles": "kr_tentL_1..8, kr_tentR_1..8"},
      "animations": [{"name": "KR_Idle", "frames": 81, "loop": true}, {"name": "KR_Swim", "frames": 41, "loop": true},
-                    {"name": "KR_Attack", "frames": 31, "loop": false, "root_motion_cm": 100, "grab_frame": 16}],
+                    {"name": "KR_Attack", "frames": 31, "loop": false, "root_motion_cm": 100, "grab_frame": 16},
+                    {"name": "KR_Search", "frames": 97, "loop": true}, {"name": "KR_Hit", "frames": 31, "loop": false, "impact_frame": 3}],
      "slots": ["M_Kraken"], "notes": ["needs LOD", "glowing eyes via emissive texture"], "movement": "Flying / FloatingPawnMovement"},
-    {"file": "SK_GiantIsopod.fbx", "type": "skeletal", "role": "enemy", "length_cm": 320, "width_cm": 189, "height_cm": 54, "facing": "Blender -Y", "bones": 69, "tris": 55794,
+    {"file": "SK_GiantIsopod.fbx", "type": "skeletal", "role": "enemy", "length_cm": 320, "width_cm": 189, "height_cm": 54, "facing": "Blender -Y", "bones": 69, "tris": 68718, "version": "v4 (2026-11-20)",
      "material": "M_GiantIsopod", "textures": ["Textures/T_GiantIsopod_BaseColor.png","Textures/T_GiantIsopod_Normal.png (OpenGL, flip green in UE)","Textures/T_GiantIsopod_Roughness.png","Textures/T_GiantIsopod_Emissive.png"],
      "root_bone": "is_root (ground level, body centre)", "bone_groups": {"body": ["is_head","is_seg1","is_seg2","is_seg3","is_body","is_seg5","is_seg6","is_seg7","is_pleon","is_tail"],
        "legs": "is_legL1..7_1..3, is_legR1..7_1..3", "antennae": "is_antL_1..5, is_antR_1..5", "maxillipeds": "is_clawL_1..2, is_clawR_1..2", "uropods": "is_uroL, is_uroR"},
      "animations": [{"name": "IS_Idle", "frames": 97, "loop": true}, {"name": "IS_Walk", "frames": 37, "loop": true, "in_place": true},
-                    {"name": "IS_Attack", "frames": 31, "loop": false, "root_motion_cm": 60, "bite_frame": 16}],
+                    {"name": "IS_Attack", "frames": 31, "loop": false, "root_motion_cm": 60, "bite_frame": 16},
+                    {"name": "IS_Search", "frames": 97, "loop": true}, {"name": "IS_Hit", "frames": 31, "loop": false, "impact_frame": 3}],
      "slots": ["M_GiantIsopod"], "notes": ["v3 faithful Bathynomus, AO baked into BaseColor, emissive = faint eye glint only"], "movement": "Walking (CharacterMovement), capsule r~60 hh~35"}
   ],
   "assets": [
@@ -1018,7 +1031,7 @@ AI 에이전트를 위한 기준 데이터입니다. 단위는 cm, 축은 Blende
 2. 모델은 **빈 오브젝트(root) 하나 아래에 메시 부품들을 자식으로 두는 구조**를 유지하세요. 모델마다 컬렉션 하나를 씁니다.
 3. 소켓은 root 아래에 `SKT_<이름>` 빈 오브젝트로 둡니다. 내보낼 때 `SOCKET_<이름>`으로 바뀝니다(`mk.py`의 `socket()` 함수).
 4. 캐릭터는 `Source/_tools/rig.py`를 씁니다(`loft`, `skin_body`, `make_armature`, `auto_weight`, `wave_action`, `export_skeletal`). 캐릭터별로 **뼈 이름을 다르게**(예: `gt_`, `eel_`) 지어야 FBX에 다른 캐릭터의 애니메이션이 섞이지 않습니다.
-4-2. 괴물은 `build_gigantura_v3.py`(현재 기간투라) / `build_eel_v2.py`로 몸을 다시 만듭니다(뼈대와 애니메이션은 유지). 먼저 `mk.py` → `rig.py` → `horror.py` → `horror2.py`를 실행해 두어야 합니다. 이후 순서는 `monsters_v2_pipeline.py`를 따릅니다: ① `uv_prep()`(UV 펼치기) → ② 씬 저장 → ③ `bake_textures.py`로 텍스처 굽기(`blender -b --factory-startup --python Source/_tools/bake_textures.py -- Source/DiveGear_Scene.blend SK_Gigantura_Body Gigantura 4096`, 뱀장어는 `SK_DeepSeaEel_Body DeepSeaEel`) → ④ `finalize()`(구운 재질로 교체, 삼각화, `SK_*.fbx` 내보내기). 절차적 원본 재질(`M_GigX_*`, `M_EelX_*`)은 Fake User로 보관돼 있습니다. v1 파일은 `Source/_backup_2026-11-09_monsters_v1/`에 있습니다.
+4-2. **(2026-11-20 이후)** 괴물은 `Source/_tools/dev/run_monster.py`로 한 번에 다시 만듭니다: 현재 스크립트는 `build_eel_v3.py` / `build_gigantura_v4.py` / `build_isopod_v4.py` / `build_kraken.py`, 수색·피격은 `build_monster_anims_extra.py`가 자동으로 붙임. 굽기는 `monsters_v2_pipeline.py`의 `bake_monster()`. 아래는 예전(v2/v3) 절차입니다 — 괴물은 `build_gigantura_v3.py` / `build_eel_v2.py`로 몸을 다시 만듭니다(뼈대와 애니메이션은 유지). 먼저 `mk.py` → `rig.py` → `horror.py` → `horror2.py`를 실행해 두어야 합니다. 이후 순서는 `monsters_v2_pipeline.py`를 따릅니다: ① `uv_prep()`(UV 펼치기) → ② 씬 저장 → ③ `bake_textures.py`로 텍스처 굽기(`blender -b --factory-startup --python Source/_tools/bake_textures.py -- Source/DiveGear_Scene.blend SK_Gigantura_Body Gigantura 4096`, 뱀장어는 `SK_DeepSeaEel_Body DeepSeaEel`) → ④ `finalize()`(구운 재질로 교체, 삼각화, `SK_*.fbx` 내보내기). 절차적 원본 재질(`M_GigX_*`, `M_EelX_*`)은 Fake User로 보관돼 있습니다. v1 파일은 `Source/_backup_2026-11-09_monsters_v1/`에 있습니다.
 4-1. 정적 에셋 내보내기는 `Source/_tools/mk.py`의 `export_unreal(root, "SM_이름", pivot)`를 사용합니다. 부품 합치기, N각형 삼각화, UV 2채널, 소켓, 실제 크기 보정, FBX 설정을 자동으로 처리합니다.
 5. 모델별 .blend는 Blender를 화면 없이 실행해서 분리합니다:
    `blender -b --factory-startup --python Source/_tools/split_models.py -- Source/DiveGear_Scene.blend Source <root이름>`
