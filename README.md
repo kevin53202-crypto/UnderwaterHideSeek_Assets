@@ -116,8 +116,21 @@ mk.py  →  weather_bake.py  →  build_<소품>.py  →  export_all()
   - **괴물 3종을 크라켄 수준으로 업그레이드**: 심해 뱀장어 v3(굵은 몸, 갈고리 가시, 푸른 발광점, 호박색 눈 9개, 뼈 16개로 매끄러운 동작), 기간투라 v4(크라켄 피부 색감, 새 대기·헤엄·물기), 거대 등각류 v4(돌기·따개비·흉터, 갈색만). 다시 굽기는 `dev/run_monster.py`.
   - 도구: `anim_picker.py`(버튼으로 애니메이션 보기), `fix_texture_paths.py`(분홍 텍스처 수정), `open_view.py` 로컬 뷰·전체 보기.
 
+- **2026-11-23**
+  - **다이버 수영 v4** (`build_diver_swim_v4.py`, 실행 `dev/run_diver_swim.py`): 게임 빌드 피드백(다리 차기 모양·몸 기울어짐/출렁임·팔이 떠다님·이동 속도 불일치) 반영해 `DV_SwimIdle`/`DV_Swim`/`DV_SwimFast`만 다시 만듦. 몸 완전 수평, 팔 IK 고정, 실제 개구리차기·플러터킥 단계, 끊김 없는 반복(마지막 = 첫 프레임), 자연 속도 0 / 60 / 150 cm/s 명시. v3 백업 `Source/_backup_2026-11-23_swim_v3/`.
+
+  - **괴물 동작 v5** (`build_monster_motion_v5.py`, 실행 `dev/run_monster_motion.py`): 뱀장어·기간투라 5개 전부, 크라켄 Swim/Idle, 등각류 Walk/Idle을 실제 생물 운동 공식(뱀장어형·전갱이형 파도, C-start, 오징어 분사, 메타크로날 보행)으로 다시 만듦. 백업 `Source/_backup_2026-11-23_monster_motion_v4/`.
+  - 괴물 3종 텍스처가 다른 PC 절대경로라 분홍색 → `fix_texture_paths.py`로 모델별 .blend 수정.
+
+  - **다이버 모델 v3** (`build_diver_v3.py`): 팔다리 볼륨·관절 이음매·5손가락 장갑·후드/목 개선, 텍스처 다시 굽기. **대기 동작 3종**(`DV_SwimIdle` 강화, `DV_Idle_Vertical`, `DV_Idle_Stand`), **수영 버벅거림 수정**(Catmull-Rom 보간).
+
+  - **다이버 B (새 디자인)**: 상업용 헬멧 잠수부 `SK_DiverB.fbx`(`build_diver_b.py`), 같은 뼈대라 동작 17개 공유. `DV_SwimIdle` v4.2(16초, 컴퓨터 확인·자세 교정).
+  - **새 바다 생물 3종**: 보빗 웜 `SK_BobbitWorm`(매복형), 거대 바다거미 `SK_SeaSpider`, 거대 악마불가사리 `SK_GiantStarfish` — 물고기가 아닌 몸 구조, 각자 동작 5개(README_UNREAL 4-B "새 바다 생물"). 유령해파리·관해파리·흡혈오징어·갯가재는 사용자 요청으로 삭제.
+
 **남은 일**
-- **다이버 수영 동작 수정 (사용자 지시, 2026-11-23, 다음 작업 1순위)**: 실제 게임 빌드에서 플레이해 본 결과 **주인공의 수영할 때 움직임이 부자연스러움**. `DV_Swim`(개구리차기), `DV_SwimFast`(도망), `DV_SwimIdle`(떠 있기)을 우선 손볼 것. 방법은 아래 "다음 작업 우선순위" 0번.
+- **AI 3D 생성 다이버(선택)**: Meshy/Tripo API 키를 넣으면 진행(WORK_LOG 4장). 공용 무료 체험 크레딧은 소진됨.
+- **다이버 동작 모션캡처 리타게팅 (사용자 결정, 2026-11-23)**: Mixamo에서 받은 FBX(`Source/_mocap/`, Without Skin, 24fps)를 다이버 뼈대로 옮겨 15개 동작 교체 예정. 받을 동작 목록은 WORK_LOG 4장.
+- **다이버 수영 v4 게임 확인**: 팀 빌드에 `SK_Diver.fbx`를 다시 임포트해 확인 후 피드백 반영(README_UNREAL의 속도·BlendSpace 설정 참고).
 - 언리얼 프로젝트 선택 후 블루프린트(숨기, 수리 상호작용, 잠수함 상태 교체)
 - 망가진 Mk2 잠수함(외부·선실) 텍스처 굽기 — 진행용·수리된 잠수함은 언리얼 타일링 재질을 슬롯에 입히는 방식 권장
 - 다이버의 다른 동작(사다리 등) — 다이버 피격·사망·숨기·도망, 괴물 수색·피격은 추가됨
@@ -174,7 +187,8 @@ mk.py  →  weather_bake.py  →  build_<소품>.py  →  export_all()
 
 ### 다음 작업 우선순위 (제안)
 
-0. **다이버 수영 동작 수정 (사용자 지시, 2026-11-23)** — 게임에서 수영이 부자연스럽다는 피드백.
+0. **다이버 수영 v4 확인 (2026-11-23 완료, 게임 확인 대기)** — 수영 3종은 이제 `Source/_tools/build_diver_swim_v4.py`가 만듭니다(v3 스크립트의 수영 부분은 쓰지 않음). 수정 후 `blender -b --factory-startup Source/Diver.blend --python Source/_tools/dev/run_diver_swim.py -- --export` → `Source/DiveGear_Scene.blend`도 같은 명령(`--export` 없이). 값은 스크립트 위쪽 `FROG` 표(개구리차기 위상별 각도), `FROG_TRIM`, `flutter_leg()`.
+   - 아래는 v4 전에 쓴 원래 지시(참고용):
    - 대상: `Source/_tools/build_diver_anims_v3.py`의 `DV_Swim` / `DV_SwimFast` / `DV_SwimIdle` (실행: `anim_kit.py` → `build_diver_anims_v3.py`, 내보내기 `rig.py`의 `export_skeletal(rig, "SK_Diver")`).
    - 먼저 무엇이 어색한지 사용자에게 구체적으로 확인(예: 다리 차기 모양, 속도감, 팔 위치, 몸이 위아래로 흔들림, 동작과 이동 속도 불일치). 게임에서는 캐릭터 이동 속도와 애니메이션이 맞지 않으면 발이 미끄러지는 느낌이 나므로 언리얼 쪽 블렌드 설정도 함께 확인.
    - 확인용: Blender에서 `dev/anim_picker.py`("Anim" 탭)로 재생, 프레임 시트(여러 프레임을 한 장에) 렌더로 비교.

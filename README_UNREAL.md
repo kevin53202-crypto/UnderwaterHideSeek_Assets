@@ -307,11 +307,46 @@ FBX에는 기본 색, 금속성, 거칠기만 들어갑니다. 아래 효과는 
 
 | FBX | 크기 | 뼈 | 삼각형 | 애니메이션 (24fps) | 유의사항 |
 |---|---|---|---|---|---|
-| `SK_Diver` 주인공 다이버 (v2) | 키 182cm(헤드램프 포함, T-포즈), 팔 폭 174cm, 오리발 포함 앞뒤 95cm | 23 | 33,280 | **v3 (2026-11-20), 15개**: `DV_SwimIdle`(96f, 반복), `DV_Swim`(56f, 반복, 개구리차기), `DV_SwimFast`(28f, 반복, 도망), `DV_Pickup`(72f), `DV_Repair_Start`(24f) / `_LoopA`(48f) / `_LoopB`(36f) / `_LoopC`(36f) / `_End`(24f), `DV_Install`(48f), `DV_Hit`(28f), `DV_Death`(84f), `DV_Hide_Enter`(30f) / `_Idle`(96f, 반복) / `_Exit`(24f) — 그 외 동작은 마네킹 리타게팅 | 뼈 이름이 **UE 마네킹과 같음**. 루트 본 `root`는 발바닥 중앙(원점). 검은 드라이슈트(주황 어깨·옆구리 패널, 반사 테이프) + **장비 일체형**(아래 참고). 재질 1개(`M_Diver`) + 4096 텍스처 4장. |
-| `SK_Gigantura` 기간투라 (v4) | 길이 385cm, 높이 108cm(등 가시 포함) | 15 | 98,470 | `GT_Swim`(37f, 반복), `GT_Idle`(97f, 반복), `GT_Bite`(31f), `GT_Search`(97f, 반복), `GT_Hit`(31f) | 루트 본 `gt_root`가 몸 중심. 재질 1개(`M_Gigantura`) + 4096 텍스처 4장. |
-| `SK_DeepSeaEel` 심해 뱀장어 (v3) | 길이 490cm(꼬리 미끼 포함), 폭 41cm, 높이 51cm | 19 | 95,308 | `EEL_Swim`(49f, 반복), `EEL_Idle`(97f, 반복), `EEL_Bite`(37f), `EEL_Search`(97f, 반복), `EEL_Hit`(31f) | 루트 본 `eel_root`가 머리 뒤. 등뼈 `eel_spine_01`~`_16`(v2는 12개). 재질 1개(`M_DeepSeaEel`) + 4096 텍스처 4장. |
-| `SK_Kraken` 크라켄 | 전체 길이 약 600cm(외투막 230cm + 다리 약 300cm, 촉수 400cm), 폭 360cm | 69 | 130,171 | `KR_Idle`(81f, 반복), `KR_Swim`(41f, 반복), `KR_Attack`(31f), `KR_Search`(97f, 반복), `KR_Hit`(31f) | 루트 본 `kr_root`가 머리와 외투막 경계. **다리 쪽이 앞(-Y)**. 다리 8개 × 뼈 6개, 촉수 2개 × 뼈 8개(`kr_arm1_1`…, `kr_tentL_1`…). 재질 1개(`M_Kraken`) + 4096 텍스처 4장. 삼각형이 많으니 LOD 필수. |
-| `SK_GiantIsopod` 거대 등각류 (v4) | 몸길이 300cm(꼬리 가시 포함 320cm), 폭 189cm(다리 포함, 몸통 125cm), 높이 54cm | 69 | 68,718 | `IS_Idle`(97f, 반복), `IS_Walk`(37f, 반복, 제자리), `IS_Attack`(31f), `IS_Search`(97f, 반복), `IS_Hit`(31f) | **바닥을 기어다니는 타입**. 루트 본 `is_root`가 발바닥 높이(z=0) 몸 중앙. 다리 7쌍 × 뼈 3개(`is_legL1_1`…), 더듬이 2 × 5, 턱다리 2 × 2(`is_clawL_1`…), 꼬리다리 `is_uroL/R`. 재질 1개(`M_GiantIsopod`) + 4096 텍스처 4장. |
+| `SK_Diver` 주인공 다이버 (**모델 v3, 2026-11-23**) | 키 182cm(헤드램프 포함, T-포즈), 팔 폭 174cm, 오리발 포함 앞뒤 95cm | 23 | **41,280** | **17개** (2026-11-23 `DV_Idle_Vertical`, `DV_Idle_Stand` 추가; 수영 3종 v4.1). 기존 v3 동작: `DV_SwimIdle`(96f, 반복), `DV_Swim`(56f, 반복, 개구리차기), `DV_SwimFast`(28f, 반복, 도망), `DV_Pickup`(72f), `DV_Repair_Start`(24f) / `_LoopA`(48f) / `_LoopB`(36f) / `_LoopC`(36f) / `_End`(24f), `DV_Install`(48f), `DV_Hit`(28f), `DV_Death`(84f), `DV_Hide_Enter`(30f) / `_Idle`(96f, 반복) / `_Exit`(24f) — 그 외 동작은 마네킹 리타게팅 | 뼈 이름이 **UE 마네킹과 같음**. 루트 본 `root`는 발바닥 중앙(원점). 검은 드라이슈트(주황 어깨·옆구리 패널, 반사 테이프) + **장비 일체형**(아래 참고). 재질 1개(`M_Diver`) + 4096 텍스처 4장. |
+| `SK_DiverB` **다이버 B (새 디자인, 2026-11-23)** | 키 192cm(헬멧 손잡이 포함), 팔 폭 174cm | 23 (`SK_Diver`와 같은 뼈대) | 47,428 | `SK_Diver`와 같은 17개 동작(뼈 이름이 같아 **같은 Skeleton을 공유**해도 됨) | **상업용 헬멧 잠수부**: 노란 유리섬유 헬멧(크롬 앞 유리창 테두리·볼트, 측면 창 2개, 오른쪽 호흡기, 조명 2개, 손잡이, 금속 목 링), 남회색 드라이슈트 + 형광 노란 패널, 회색 비상 탱크 + 하네스, 3가닥 생명줄 다발(오른쪽 엉덩이 D-링까지, 등 뒤로 짧게 끊김 — 긴 줄은 언리얼 Cable Component로), 납 웨이트 벨트, 5손가락 장갑, 오리발. 재질 1개(`M_DiverB`) + 4096 텍스처 4장(**FBX에 내장**). 스크립트 `build_diver_b.py`, 실행 `dev/run_diver_b.py -- --bake`. |
+| `SK_Gigantura` 기간투라 (v4) | 길이 385cm, 높이 108cm(등 가시 포함) | 15 | 98,470 | **v5 (2026-11-23)**: `GT_Swim`(41f, 반복), `GT_Idle`(97f, 반복), `GT_Bite`(30f), `GT_Search`(97f, 반복), `GT_Hit`(30f) | 루트 본 `gt_root`가 몸 중심. 재질 1개(`M_Gigantura`) + 4096 텍스처 4장. |
+| `SK_DeepSeaEel` 심해 뱀장어 (v3) | 길이 490cm(꼬리 미끼 포함), 폭 41cm, 높이 51cm | 19 | 95,308 | **v5 (2026-11-23)**: `EEL_Swim`(41f, 반복), `EEL_Idle`(97f, 반복), `EEL_Bite`(36f), `EEL_Search`(97f, 반복), `EEL_Hit`(30f) | 루트 본 `eel_root`가 머리 뒤. 등뼈 `eel_spine_01`~`_16`(v2는 12개). 재질 1개(`M_DeepSeaEel`) + 4096 텍스처 4장. |
+| `SK_Kraken` 크라켄 | 전체 길이 약 600cm(외투막 230cm + 다리 약 300cm, 촉수 400cm), 폭 360cm | 69 | 130,171 | **v5 (2026-11-23)**: `KR_Idle`(97f, 반복), `KR_Swim`(49f, 반복), `KR_Attack`(31f), `KR_Search`(97f, 반복), `KR_Hit`(31f) | 루트 본 `kr_root`가 머리와 외투막 경계. **다리 쪽이 앞(-Y)**. 다리 8개 × 뼈 6개, 촉수 2개 × 뼈 8개(`kr_arm1_1`…, `kr_tentL_1`…). 재질 1개(`M_Kraken`) + 4096 텍스처 4장. 삼각형이 많으니 LOD 필수. |
+| `SK_GiantIsopod` 거대 등각류 (v4) | 몸길이 300cm(꼬리 가시 포함 320cm), 폭 189cm(다리 포함, 몸통 125cm), 높이 54cm | 69 | 68,718 | **v5 (2026-11-23)**: `IS_Idle`(97f, 반복), `IS_Walk`(37f, 반복, 제자리), `IS_Attack`(31f), `IS_Search`(97f, 반복), `IS_Hit`(31f) | **바닥을 기어다니는 타입**. 루트 본 `is_root`가 발바닥 높이(z=0) 몸 중앙. 다리 7쌍 × 뼈 3개(`is_legL1_1`…), 더듬이 2 × 5, 턱다리 2 × 2(`is_clawL_1`…), 꼬리다리 `is_uroL/R`. 재질 1개(`M_GiantIsopod`) + 4096 텍스처 4장. |
+
+### 새 바다 생물 (2026-11-23) — 물고기가 아닌 몸 구조
+
+사용자 피드백("너무 생선들만 있는 느낌")으로 실제 심해 생물을 바탕으로 추가했습니다(유령해파리·관해파리·흡혈오징어·갯가재는 사용자 요청으로 삭제 → `Source/_backup_2026-11-23_removed_*`). 모두 **자체 뼈대 + 4096 텍스처(FBX에 내장) + 동작 5개**, 24fps, 반복 동작은 마지막 프레임 = 첫 프레임. 제작: `Source/_tools/build_<이름>.py`, 실행 `dev/run_creature.py -- build_<이름>.py <Prefix> --bake`, 작업 씬 추가 `dev/add_creatures_to_scene.py`.
+
+| FBX | 생물 (실제 종) | 크기 | 뼈 / 삼각형 | 동작 | 게임 역할 · 유의사항 |
+|---|---|---|---|---|---|
+| `SK_GiantStarfish` | **거대 악마불가사리** (Acanthaster) | 지름 3.0m, 높이 0.54m | 62 / 93,786 | `SF_Walk`(73f, 관족으로 미끄러지듯 이동: 팔이 둘레를 따라 물결, 앞 팔을 들어 더듬음), `SF_Idle`(97f), `SF_Search`(97f, 앞쪽 팔을 높이 들어 휘저음), `SF_Attack`(40f, 아치형으로 0.45m 솟았다 0.9m 덮치고 팔로 돔처럼 감쌈, **덮치기 22f**), `SF_Hit`(30f, 모든 팔을 말아 움츠림) | 바닥·벽을 천천히 기어다니는 술래, 팔 15개 + 노란 끝 독가시 수백 개. 가시 때문에 삼각형이 많아 **Nanite 권장**. 기준점 = 원반 아래 바닥, Walking(느리게, 약 20 cm/s). |
+| `SK_BobbitWorm` | **보빗 웜** (Eunice aphroditois) | 길이 5.0m (지면 위 0.86m) | 34 / 49,012 | `BW_Idle`(97f, **매복**: 머리만 내밀고 더듬이로 감지), `BW_Attack`(30f, 턱을 벌리고 0.8m 솟구쳐 1.3m 앞으로 덮침, **물기 8f**, 구멍으로 끌고 들어감), `BW_Search`(97f, 더 나와서 머리로 원을 그리며 탐색), `BW_Hit`(30f, 4프레임 만에 구멍으로 숨었다 천천히 나옴), `BW_Swim`(49f, 구멍 밖 수평 헤엄) | **매복형 술래**: 기준점 = 바닥 구멍 입구(z=0). 몸이 수직 구멍을 따라 위아래로만 움직이므로 **바닥에 구멍(또는 Decal) 위에 배치**하고 지면 아래 몸은 바닥에 가려지게 하세요. 근접 트리거로 Attack. |
+| `SK_SeaSpider` | **거대 바다거미** (Pycnogonida, Colossendeis) | 다리 폭 4.0m, 높이 1.5m | 39 / 19,696 | `SS_Walk`(49f, 다리 4개씩 번갈아 디딤, 디딘 발 고정), `SS_Idle`(97f, 다리 톡톡·주둥이 실룩), `SS_Search`(97f, **앞다리를 들어 더듬이처럼 휘저음**), `SS_Attack`(36f, 앞다리를 치켜들었다 누르고 0.8m 덮치며 주둥이로 찌름, **찌르기 15f**), `SS_Hit`(30f) | 바닥·벽을 기어다니는 술래(거대 등각류와 같은 Walking). 주황빛 붉은 몸, 긴 주둥이, 눈 4개. 기준점 = 몸통 아래 바닥. 자연 걷기 속도 약 65 cm/s. |
+
+#### 새 생물 추가 동작 (2026-11-23) — 술래 AI용
+
+스크립트 `Source/_tools/creature_anims_extra.py`, 실행 `dev/run_creature_anims.py -- --export`, 작업 씬 반영 `dev/sync_creature_actions.py`. 회전 동작은 **루트 본이 실제로 돌아가는 루트 모션**입니다(Enable Root Motion을 켜면 캐릭터가 그만큼 돕니다).
+
+| 생물 | 추가 동작 | 쓰임 |
+|---|---|---|
+| 보빗 웜 | `BW_Hidden`(49f 반복, 구멍 속에 완전히 숨고 더듬이 끝만 내밀어 까딱), `BW_Emerge`(36f, 구멍에서 솟아올라 매복 자세로 → `BW_Idle`로 이어짐), `BW_Alert`(24f, 멈칫·0.12m 솟구침·더듬이를 앞으로·머리를 대상 쪽으로), `BW_Eat`(73f 반복, 턱에 문 채 씹으며 구멍으로 끌어당김), `BW_Death`(48f, 경련 후 앞몸이 구멍 밖으로 쓰러짐) | 숨기 → 다이버 감지(Alert) → 나오기(Emerge) → 공격 → 먹기 |
+| 바다거미 | `SS_Run`(25f 반복, 추격: 빠른 교대 걸음·몸을 낮추고 앞으로 기울임, 자연 속도 약 160 cm/s), `SS_TurnL`/`SS_TurnR`(48f, **제자리 90° 회전**), `SS_Alert`(30f, 몸을 들고 앞다리를 치켜듦), `SS_Death`(60f, 다리를 안으로 오므리며 바닥에 주저앉음) | 추격·방향 전환·사망 |
+| 악마불가사리 | `SF_Fast`(49f 반복, 추격: 빠른 물결·앞 팔을 높이), `SF_TurnL`/`SF_TurnR`(72f, **제자리 60° 회전**), `SF_Alert`(30f, 모든 팔 끝이 한꺼번에 들림), `SF_Eat`(97f 반복, 덮은 채 위를 뒤집어 소화하는 박동), `SF_Death`(60f, 팔이 축 늘어지며 납작해짐) | 추격·방향 전환·잡은 뒤 먹기·사망 |
+### 괴물 동작 v5 (2026-11-23) — 실제 생물 운동 기반
+
+사용자 피드백("전체적으로 부자연스러움")으로 괴물 동작을 **생물 운동 공식**으로 다시 만들었습니다. 모델·웨이트·텍스처는 그대로이고 동작만 바뀌었습니다. 스크립트 `Source/_tools/build_monster_motion_v5.py`, 실행 `dev/run_monster_motion.py`, 이전 버전 백업 `Source/_backup_2026-11-23_monster_motion_v4/`.
+
+| 괴물 | 다시 만든 동작 | 원리 | 자연 속도 |
+|---|---|---|---|
+| 심해 뱀장어 | Swim · Idle · Search · Bite · Hit (전부) | 뱀장어형: 머리→꼬리로 흐르는 파도, 진폭이 꼬리로 갈수록 지수적으로 커짐(꼬리 약 몸길이 9%), 파장 0.65L, 0.6Hz. 몸이 무게중심 기준으로 좌우 반동. Search는 몸이 머리가 지나간 길을 따라감. Hit는 물고기 놀람 반응(C-start) | 130 cm/s |
+| 기간투라 | Swim · Idle · Search · Bite · Hit (전부) | 전갱이형: 앞몸은 단단, 뒤 1/3이 크게 휨(꼬리 약 13%), 파장 1.0L, 0.6Hz. 헤엄칠 때 가슴지느러미 접음, 떠 있을 때 좌우 번갈아 젓기 | 175 cm/s |
+| 크라켄 | Swim · Idle | 오징어식 다리 먼저 헤엄: 다리를 원뿔로 모음, 외투막 빠른 수축(30%)·느린 재충전(70%)에 맞춰 몸이 밀려남, 다리 끝이 물 저항으로 늦게 따라옴. Idle은 다리마다 다른 속도로 꿈틀거림 | 120 cm/s |
+| 거대 등각류 | Walk · Idle | 메타크로날 보행: 다리 7쌍이 뒤→앞 순서로 물결, 좌우 반대 박자, 디딘 시간 65%. 디딘 발은 일정 속도로 뒤로(미끄러짐 없음), 든 발은 들려서 앞으로 | 30 cm/s |
+
+- 크라켄 Attack/Search/Hit, 등각류 Attack/Search/Hit은 v4 그대로입니다.
+- 반복 동작은 마지막 프레임 = 첫 프레임(끊김 없는 Loop). 이동 속도를 위 자연 속도에 맞추거나 Rate Scale = 실제 속도 ÷ 자연 속도로 맞추면 헤엄·걸음과 이동이 어긋나지 않습니다.
+- 모든 동작이 모든 뼈를 매 프레임 키로 갖고 있어 동작 사이에 이전 자세가 남지 않습니다.
 
 ### 괴물 디자인 (v2, 2026-11-09)
 
@@ -320,7 +355,7 @@ FBX에는 기본 색, 금속성, 거칠기만 들어갑니다. 아래 효과는 
 - **기간투라 (v3, 괴물화 크리처, 처음부터 새로 제작)**: 몸의 1/3을 차지하는 두개골형 머리와 솟은 등, 피부를 뚫고 나온 **뼈 가시 23개**, 주둥이 피부가 벗겨져 드러난 금 간 두개골, 깊은 눈구멍 속 **세로 동공의 빛나는 호박색 눈 2개**와 왼쪽 뺨에 돋아난 작은 눈 6개(+오른쪽 2개), 말려 올라간 입술 사이로 드러난 잇몸과 제멋대로 바깥으로 뻗은 이빨 3줄, **V자로 갈라진 아래턱**과 엄니 2개, 목구멍 안쪽의 붉게 빛나는 **두 번째 이빨 고리**, 오른쪽 옆구리(Blender +X)를 뚫고 나온 부러진 갈비뼈 3개, 왼쪽 목의 종양 덩어리, 뼈 갈고리 같은 가슴지느러미, 너덜너덜한 꼬리·뒷지느러미. 색은 검붉은 멍 빛 피부, 젖은 생살, 누런 뼈.
 - **심해 뱀장어(펠리컨장어)**: 검고 점액질로 번들거리는 채찍 같은 몸, 주둥이 끝의 작고 탁한 눈, 몸 길이의 1/7에 달하는 긴 턱과 그 사이에 늘어진 **주름진 막 주머니**(핏줄이 비침, 안쪽은 젖은 살), 양턱의 가는 바늘 이빨, 등·배를 따라 이어진 지느러미 막, 꼬리 끝 미끼 = **분홍빛으로 빛나는 살덩이에 박혀 각자 다른 곳을 노려보는 눈알 5개**와 늘어진 실 촉수
 - **크라켄 (2026-11-09 신규)**: 기간투라 v3와 같은 괴물화 스타일. 종양 혹과 **뼈 가시 줄**이 솟은 주름진 외투막, 외투막의 발톱 찢김 3줄, 찢어진 꼬리 지느러미, 깊은 눈구멍 속 **가로 동공의 빛나는 호박색 눈 2개**와 머리 위 작은 눈 6개, 끝이 소용돌이처럼 말린 굵은 다리 8개(사이에 막), 긴 촉수 2개와 끝의 곤봉, **테두리에 갈고리 이빨이 난 빨판**, 다리 중심의 검은 부리와 이빨 고리 입.
-  - 애니메이션: `KR_Idle` 다리가 천천히 꿈틀거림. `KR_Swim` 다리를 오므렸다 펴며 우산처럼 헤엄. `KR_Attack` 1~9f 다리를 활짝 펼침 → 10~17f 앞으로 약 100cm 덮치며 다리로 움켜쥠(루트 모션, `kr_root`) → 이후 천천히 풀림. 잡기 판정은 약 16f.
+  - 애니메이션: `KR_Idle` 다리가 천천히 꿈틀거림. `KR_Swim` (v5) 오징어처럼 다리를 원뿔로 모아 앞으로 헤엄(외투막 박동 분사, 다리 끝이 물 저항으로 늦게 따라옴). `KR_Attack` 1~9f 다리를 활짝 펼침 → 10~17f 앞으로 약 100cm 덮치며 다리로 움켜쥠(루트 모션, `kr_root`) → 이후 천천히 풀림. 잡기 판정은 약 16f.
 - **거대 등각류 v3 (2026-11-20 재제작, 실제 등각류에 충실)**: 실제 심해 대왕 등각류(*Bathynomus giganteus*)를 약 3m로 키운 모습. 납작한 타원 방패형 몸통, 7장의 가슴판이 뒤쪽 판 위로 4cm씩 계단처럼 겹치고 옆판(epimera)이 아래로 늘어져 뒤로 갈수록 뒤쪽으로 뾰족해짐. 몸보다 좁은 머리가 1번 판 앞에 끼워져 있고, 머리 양옆 가장자리를 따라 납작한 타원형 겹눈. 다리는 **몸 아래에 숨겨진** 구조(굵은 밑마디는 몸 아래, 무릎은 껍질 가장자리, 끝마디는 바닥으로 거의 수직; 앞 3쌍은 앞쪽, 뒤 4쌍은 뒤쪽). 넓고 둥근 꼬리판에 가운데 낮은 용골과 가시 11개, 노 모양 꼬리다리. 색은 **갈색 계열만**(진한 갈색·밤색·황갈색 얼룩, 짙은 적갈색 판 가장자리, 회색·흰색 없음 — 2026-11-20 재도색), 미세한 점 구멍, AO(틈새 그늘)를 BaseColor에 구워 넣음. 판 앞쪽 어두운 띠·누런 가장자리 띠·2~3cm 반점·점 구멍·퇴적물 얼룩, 등판과 눈은 텍스처 면적 2배(UV 재배치). 공격(`IS_Attack`)은 앞몸을 들고 앞다리 3쌍을 뻗은 뒤 약 60cm 덮침(16프레임 즈음). 제작 스크립트 `Source/_tools/build_isopod_v3.py` (v2 `build_isopod_v2.py`는 참고용으로 남김), v1 백업 `Source/_backup_2026-11-19_isopod_v1/`.
 - **괴물 3종 크라켄 수준으로 업그레이드 (2026-11-20)**: 사용자가 크라켄을 가장 좋은 퀄리티로 꼽아, 같은 기법을 나머지에 적용했습니다. 크라켄의 비결 = ① 몸에 직접 새긴 혹·상처·눈구멍 + 갈고리 가시 줄 + 큰 눈/작은 눈 여러 개, ② 보랏빛 검정 → 붉은 옆구리 바탕 위에 얼룩·색소 반점(chromatophore)·핏줄·흉터·상처 속 생살을 겹친 피부, ③ 빛나는 호박색 눈, ④ 부위마다 시간차를 둔 겹친 움직임.
   - **심해 뱀장어 v3** (`build_eel_v3.py`, 뼈대부터 새로): 몸통 1.5배 굵게, 혹·발톱 상처·눈구멍을 몸에 새김, 등 갈고리 가시 줄, 옆구리 **푸르게 빛나는 발광점** 줄(좌우 각 22개), 세로 동공 호박색 큰 눈 2개 + 작은 눈 7개, 더 큰 송곳니, 주름진 턱 주머니·꼬리 미끼는 유지. 등뼈 12 → **16개**. `EEL_Idle`/`EEL_Swim`/`EEL_Bite` 다시 만듦(머리를 몸 물결 반대로 보정해 덜 흔들림, 물기는 S자로 감았다가 약 95cm 덮치며 턱 70° 벌림).
@@ -365,9 +400,17 @@ FBX에 텍스처 경로가 들어 있어 임포트할 때 자동으로 연결될
 
 | 애니메이션 | 길이 | 용도 | 연결 방법 / Notify |
 |---|---|---|---|
-| `DV_SwimIdle` | 96f 반복 | 떠 있기. **수평 트림 자세**, 호흡, 손 스컬링, 좌우 둘러보기, 한쪽 오리발 보정 | AnimBP 속도 0일 때 |
-| `DV_Swim` | 56f 반복 | 수평 자세 **개구리차기**(접기 → 발 돌리기 → 차기 → 미끄러지기), 팔은 몸 앞에 접음 | 속도에 따라 SwimIdle ↔ Swim 블렌드 |
-| `DV_SwimFast` | 28f 반복 | **도망치기**: 빠른 플러터킥(다리 번갈아 차기), 팔은 몸 옆에 붙여 유선형 | 달리기(스프린트) 입력 / 빠른 속도 |
+| `DV_SwimIdle` | **385f 반복 (v4.2, 16초)** | 수평 떠 있기. 실제 개구리 트림(엉덩이 22° 굽힘, 무릎 105°, 오리발 수평). 길이가 다른 호흡 4번 + 숨에 따른 부력 오르내림, **왼손 다이브 컴퓨터 확인**(팔을 들어 마스크 앞에서 봄), 천천히 자세가 틀어졌다가 **양발 작은 차기로 바로잡기**, 한쪽 젓기 4번, 불규칙한 둘러보기 — 16초라 반복이 잘 안 보임 | 수평 상태에서 속도 0일 때 |
+| `DV_Idle_Vertical` | **145f 반복 (신규, 6초)** | **물속에서 서서 떠 있기**: 몸을 세우고 약간 앞으로 기울임, 오리발 느린 번갈아 차기(제자리 유지), 손은 허리 앞에서 8자 젓기, 호흡 부력, 둘러보기 | 멈춰서 주변을 볼 때, 대화·대기 |
+| `DV_Idle_Stand` | **193f 반복 (신규, 8초)** | **바닥·잠수함 안에 서 있기**: 발 고정, 8초에 한 번 좌→우 체중 이동(안 실린 무릎 살짝 굽힘), 팔 늘어뜨림, 호흡, 둘러보기 | 선실 안·해저 바닥에 착지했을 때 |
+| `DV_Swim` | **49f 반복 (v4)** | 수평 **개구리차기** 2.0초 1회: 미끄러지기 → 발뒤꿈치 올림(오리발 수평) → 발목 바깥으로 → 다리를 벌려 뒤로 휘감기 → 모아서 일자 → 미끄러지기. 팔 고정 | 자연 속도 **약 60 cm/s** |
+| `DV_SwimFast` | **21f 반복 (v4)** | **도망치기**: 엉덩이에서 시작하는 플러터킥(0.83초에 2번), 내려찰 때 무릎이 펴지며 채찍처럼, 오리발 휨, 몸 약간 구름. 팔은 몸 옆 유선형 고정 | 자연 속도 **약 150 cm/s** |
+
+  - **수영 v4 (2026-11-23)**: 팀 게임 빌드 피드백(다리 차기 모양, 몸 기울어짐·출렁임, 팔이 떠다님, 이동 속도와 안 맞음)으로 수영 3종만 다시 만듦. 스크립트 `Source/_tools/build_diver_swim_v4.py`(실행 `dev/run_diver_swim.py`), v3 백업 `Source/_backup_2026-11-23_swim_v3/`. 키 자세 보간·떠 있기 노이즈 레이어 대신 **주기 위상 함수로 매 프레임 계산**, 팔은 IK로 한 번 정해 고정.
+  - **v4.1 (2026-11-23) 버벅거림 수정**: `DV_Swim`이 키 자세마다 관절이 멈췄다 가는 문제(오리발 끝 속도가 5~15 → 0.7cm/프레임으로 뚝 떨어짐) → 키 사이 보간을 속도가 이어지는 Catmull-Rom으로 바꾸고 미끄러지기 구간도 천천히 풀리게 함(이제 속도가 끊김 없이 이어짐).
+  - **반복 이음매**: 마지막 프레임(49/21/193/145/193)이 첫 프레임과 같습니다. 언리얼은 마지막 → 첫 프레임으로 넘어가므로 그대로 Loop 하면 끊김이 없습니다.
+  - **속도 맞추기(발 미끄러짐 방지)**: BlendSpace 1D(Speed)에 `SwimIdle` 0, `Swim` 60, `SwimFast` 150으로 놓으세요. 게임의 이동 속도가 다르면 그 값에 맞춰 놓고, 대신 **Rate Scale = 실제 속도 ÷ 자연 속도**(예: 걷기 수영 120 cm/s라면 Swim Rate Scale 2.0은 너무 빠르니, 차라리 이동 속도를 60~80으로 낮추는 것을 권장). 개구리차기와 플러터킥은 다리 동작이 달라서 둘 사이 블렌드 구간은 짧게(속도 100~150 사이) 두세요.
+  - 수영 3종은 몸이 **완전 수평**(골반 90°)이고 다른 동작(줍기·수리·피격 등 v3)은 약 50° 트림에서 시작합니다. 전환 Blend Time을 0.25~0.3초로 두면 자연스럽게 이어집니다.
 | `DV_Pickup` | 72f | 아래 앞쪽 부품 줍기: 시선 → 오리발 한 번 차며 머리 쪽으로 기울기 → 손 뻗기 → 잡기 → 무게로 손이 살짝 내려감 → 가슴 앞에서 확인 → 허벅지 주머니에 넣기 | Montage. **34f `GrabItem`**(손이 닿는 프레임) |
 | `DV_Repair_Start` | 24f | 패널을 보고 다가가 몸을 세우며 **왼손으로 가장자리를 잡고** 무릎을 뒤로 접어 고정, 오른손 렌치 잡기 | Montage 섹션 `Start` |
 | `DV_Repair_LoopA` | 48f | 렌치 3번 끊어 돌리기(80°/95°/70°, 돌릴 때마다 어깨·몸통 반동) | 섹션 `Loop_A`. `Ratchet` 8f/24f/39f |
@@ -385,6 +428,12 @@ FBX에 텍스처 경로가 들어 있어 임포트할 때 자동으로 연결될
   - **위치 맞추기 (v3)**: 수리·설치 손 위치는 캐릭터 원점(발바닥 중앙, -Y가 앞) 기준으로 **패널 면이 약 48~50cm 앞**, 렌치 볼트 높이 약 122cm, 왼손 잡는 곳 약 (X +24, 높이 134cm), 부품 끼우는 슬롯 높이 약 124cm입니다. `SOCKET_Repair_*` 앞 약 50cm에 오도록 **Motion Warping**으로 맞추고, 수리 지점마다 높이 차이는 캐릭터 높이(Z) 이동이나 **Two Bone IK**로 보정하세요.
   - **줍기 위치 (v3)**: 부품(손목 기준)이 원점에서 앞 약 84cm, 높이 약 64cm에 있을 때 손이 정확히 닿습니다(머리 쪽으로 기울어짐). 다르면 Motion Warping으로 캐릭터를 옮기세요.
 
+- **게임에서 다이버 색이 안 나올 때 (2026-11-23)**: 원인은 ① 예전 FBX가 텍스처를 **경로로만** 가리켜서(팀원 PC 절대경로 / 옆의 `Textures\`) FBX만 가져오면 텍스처가 안 붙음, ② 다이버 초기 버전(텍스처 없음) 때 생긴 `M_Diver` 재질이 프로젝트에 남아 있으면 언리얼이 **같은 이름 재질을 재사용**해서 다시 가져와도 색이 안 붙음. 해결: 이제 `SK_Diver.fbx`에 **4096 텍스처 4장이 들어 있습니다**(약 30MB). 언리얼에서 ⑴ 콘텐츠 브라우저의 기존 `M_Diver`(와 `T_Diver_*`)를 지우거나 이름을 바꾸고, ⑵ `SK_Diver.fbx`를 다시 임포트(Material Import Method = **Create New Materials**, **Import Textures 켜기**). 그래도 회색이면 `M_Diver`를 열어 `T_Diver_BaseColor` → Base Color, `T_Diver_Normal`(Normal Map, Flip Green) → Normal, `T_Diver_Roughness`(sRGB 끄기) → Roughness, `T_Diver_Emissive` → Emissive Color를 직접 연결하세요.
+- **동작 속도 바꾸기**
+  - 언리얼(권장, 다시 내보낼 필요 없음): 애니메이션 시퀀스 에셋을 열고 Asset Details → **Rate Scale**(1.0 기본, 1.2 = 20% 빠르게, 0.8 = 느리게). BlendSpace는 샘플마다 Rate Scale, AnimBP의 Sequence Player 노드는 **Play Rate** 핀(예: `현재 속도 ÷ 자연 속도`를 연결하면 이동 속도에 자동으로 맞음), Montage는 `Play Montage`의 **Play Rate**.
+  - Blender(원본 자체를 바꿀 때): `Source/_tools/build_diver_swim_v4.py` 맨 위 `SPEED = {...}`(다이버 수영·대기 5개), `build_monster_motion_v5.py` 맨 위 `SPEED`(괴물 반복 동작)의 숫자를 바꾸고 다시 실행 → 프레임 수가 바뀌어 빨라지거나 느려짐. 명령: `blender -b --factory-startup Source/Diver.blend --python Source/_tools/dev/run_diver_swim.py -- --export` (괴물은 `Source/<괴물>.blend` + `dev/run_monster_motion.py -- --export`), 작업 씬도 같은 명령을 `--export` 없이.
+  - Blender에서 보기만 할 때: 타임라인 재생 속도는 Output Properties → Frame Rate(24 fps 기준). 파일은 바뀌지 않습니다.
+- **모델 v3 (2026-11-23)**: 사용자 요청 "전체적인 모델링 수정". 같은 뼈대·뼈 이름·장비·색 디자인 그대로, 몸만 다듬음 → 동작·언리얼 설정은 그대로 동작합니다. ① 가는 관 같던 팔다리를 드라이슈트 볼륨으로(허벅지 9.5→10.8cm, 종아리 5.8→6.8cm, 위팔 7.0→7.9cm, 아래팔 근육, 어깨 삼각근, 승모근, 엉덩이), ② 무릎·팔꿈치 이음매 제거(곡선 분할 4→7, 반지름 완만하게, 리메시 5.5→4.5mm, 스무딩 강화), ③ 손가락 2개 벙어리장갑 → **5손가락 장갑**(살짝 굽힌 손가락, 마주 보는 엄지, 손목 실링), ④ 굵은 후드·목. 삼각형 33,280 → 41,280, 텍스처 4096 다시 구움. 스크립트 `Source/_tools/build_diver_v3.py`, 실행 `dev/run_diver_model.py -- --bake`, 작업 씬 교체 `dev/swap_diver_mesh.py`. v2 백업 `Source/_backup_2026-11-23_diver_v2_model/`.
 - **장비는 v2부터 캐릭터에 포함돼 있습니다(2026-11-09).** 마스크·후드·헤드램프, 산소통·밸브·백플레이트·BCD 날개·하네스, 호스·잔압계, 다이브 컴퓨터(왼손목), 칼(오른쪽 종아리), 허벅지 주머니, 무릎 보호대, 오리발이 모두 `SK_Diver` 메시 안에서 뼈를 따라 움직입니다. 따로 붙일 필요가 없습니다.
   - 정적 장비 FBX(`SM_ScubaTank`, `SM_BCD`, `SM_DiveMask`, `SM_Fin`, `SM_Regulator`)는 **줍는 아이템·잠수함 소품용**으로 그대로 씁니다.
   - 손전등(`SM_DiveLight`)만 손에 들게 하려면 스켈레톤에 `hand_r` 소켓을 만들어 붙이세요(손바닥 안, 렌즈가 손가락 방향).
@@ -859,11 +908,14 @@ AI 에이전트를 위한 기준 데이터입니다. 단위는 cm, 축은 Blende
   },
   "characters": [
     {"file": "SK_Diver.fbx", "type": "skeletal", "role": "player", "height_cm": 178, "pose": "T-pose", "facing": "Blender -Y (rotate mesh yaw -90 in Character BP)",
-     "bones": 23, "tris": 5744, "root_bone": "root (feet origin)", "ue_mannequin_bone_names": true,
+     "bones": 23, "tris": 41280, "model_version": "v3 2026-11-23", "root_bone": "root (feet origin)", "ue_mannequin_bone_names": true,
      "bone_list": ["root","pelvis","spine_01","spine_02","spine_03","neck_01","head","clavicle_l","upperarm_l","lowerarm_l","hand_l","thigh_l","calf_l","foot_l","ball_l","clavicle_r","upperarm_r","lowerarm_r","hand_r","thigh_r","calf_r","foot_r","ball_r"],
      "animations_version": "v3 (2026-11-20, hand-keyed poses, IK-placed contacts baked to FK; horizontal trim idle)",
-     "animations": [{"name": "DV_SwimIdle", "frames": 96, "loop": true}, {"name": "DV_Swim", "frames": 56, "loop": true, "pose": "horizontal, frog kick"},
-                    {"name": "DV_SwimFast", "frames": 28, "loop": true, "pose": "horizontal, flutter kick, flee"},
+     "animations": [{"name": "DV_SwimIdle", "frames": 385, "loop": true, "version": "v4.2 2026-11-23", "natural_speed_cm_s": 0, "last_frame_equals_first": true, "pose": "horizontal hover, breathing buoyancy"},
+                    {"name": "DV_Idle_Vertical", "frames": 145, "loop": true, "version": "2026-11-23", "pose": "upright hover, slow fin treading, hand sculling", "last_frame_equals_first": true},
+                    {"name": "DV_Idle_Stand", "frames": 193, "loop": true, "version": "2026-11-23", "pose": "standing on floor (feet planted), weight shift", "last_frame_equals_first": true},
+                    {"name": "DV_Swim", "frames": 49, "loop": true, "pose": "level (pelvis 90 deg), frog kick 2.0 s, arms fixed, C1-continuous (no stutter)", "version": "v4.1 2026-11-23", "natural_speed_cm_s": 60, "last_frame_equals_first": true},
+                    {"name": "DV_SwimFast", "frames": 21, "loop": true, "pose": "level, hip-driven flutter kick, arms along body, flee", "version": "v4 2026-11-23", "natural_speed_cm_s": 150, "last_frame_equals_first": true},
                     {"name": "DV_Pickup", "frames": 72, "loop": false, "notify": {"GrabItem": 34}, "item_wrist_target_cm": [-10, -84, 64]},
                     {"name": "DV_Repair_Start", "frames": 24, "loop": false, "montage_section": "Start"},
                     {"name": "DV_Repair_LoopA", "frames": 48, "loop": true, "montage_section": "Loop_A", "notify": {"Ratchet": [8, 24, 39]}},
@@ -881,27 +933,46 @@ AI 에이전트를 위한 기준 데이터입니다. 단위는 cm, 축은 Blende
      "textures": ["Textures/T_Diver_BaseColor.png","Textures/T_Diver_Normal.png (OpenGL, flip green in UE)","Textures/T_Diver_Roughness.png","Textures/T_Diver_Emissive.png"],
      "slots": ["M_Diver"], "integrated_gear": ["full-face mask + hood + headlamp","steel tank + valve","backplate + wing + harness","hoses + SPG","dive computer (left wrist)","knife (right calf)","thigh pockets","knee pads","fins"],
      "sockets_to_add": {"SM_DiveLight.fbx": "hand_r (palm, lens along fingers)", "HeadlampSpot": "head (approx 0,-8,+23 cm, facing -Y)"}},
+    {"file": "SK_DiverB.fbx", "type": "skeletal", "role": "player (alternative design)", "height_cm": 192, "facing": "Blender -Y", "bones": 23, "tris": 47428,
+     "skeleton": "same bone names as SK_Diver (can share the SK_Diver skeleton asset)", "material": "M_DiverB", "textures_embedded_in_fbx": true,
+     "style": "commercial helmet diver", "animations": "same 17 DV_* clips as SK_Diver", "version": "2026-11-23"},
+    {"file": "SK_GiantStarfish.fbx", "type": "skeletal", "role": "enemy (crawler)", "species": "Acanthaster (crown-of-thorns)", "diameter_cm": 299, "height_cm": 54, "arms": 15, "pivot": "floor under the disc", "bones": 62, "tris": 93786, "textures_embedded_in_fbx": true,
+     "animations": [{"name": "SF_Walk", "frames": 73, "loop": true, "natural_speed_cm_s": 20}, {"name": "SF_Idle", "frames": 97, "loop": true}, {"name": "SF_Search", "frames": 97, "loop": true},
+                    {"name": "SF_Attack", "frames": 40, "loop": false, "root_motion_cm": 90, "smother_frame": 22}, {"name": "SF_Hit", "frames": 30, "loop": false},
+                    {"name": "SF_Fast", "frames": 49, "loop": true}, {"name": "SF_TurnL", "frames": 72, "loop": false, "root_yaw_deg": 60}, {"name": "SF_TurnR", "frames": 72, "loop": false, "root_yaw_deg": -60},
+                    {"name": "SF_Alert", "frames": 30, "loop": false}, {"name": "SF_Eat", "frames": 97, "loop": true}, {"name": "SF_Death", "frames": 60, "loop": false}], "notes": ["many spines -> Nanite"], "movement": "Walking, slow"},
+    {"file": "SK_BobbitWorm.fbx", "type": "skeletal", "role": "enemy (ambush)", "species": "Eunice aphroditois", "length_cm": 501, "above_ground_cm": 86, "pivot": "burrow mouth on the floor", "bones": 34, "tris": 49012, "textures_embedded_in_fbx": true,
+     "animations": [{"name": "BW_Idle", "frames": 97, "loop": true, "pose": "ambush, head out"}, {"name": "BW_Attack", "frames": 30, "loop": false, "bite_frame": 8, "reach_cm": 130},
+                    {"name": "BW_Search", "frames": 97, "loop": true}, {"name": "BW_Hit", "frames": 30, "loop": false, "pose": "retracts into the burrow"}, {"name": "BW_Swim", "frames": 49, "loop": true, "pose": "horizontal, out of the burrow"},
+                    {"name": "BW_Hidden", "frames": 49, "loop": true}, {"name": "BW_Emerge", "frames": 36, "loop": false}, {"name": "BW_Alert", "frames": 24, "loop": false},
+                    {"name": "BW_Eat", "frames": 73, "loop": true}, {"name": "BW_Death", "frames": 48, "loop": false}],
+     "notes": ["place over a hole in the floor; the buried part must be hidden by the floor"]},
+    {"file": "SK_SeaSpider.fbx", "type": "skeletal", "role": "enemy (crawler)", "species": "Pycnogonida (Colossendeis)", "leg_span_cm": 400, "height_cm": 152, "pivot": "ground under the trunk", "bones": 39, "tris": 19696, "textures_embedded_in_fbx": true,
+     "animations": [{"name": "SS_Walk", "frames": 49, "loop": true, "natural_speed_cm_s": 65}, {"name": "SS_Idle", "frames": 97, "loop": true}, {"name": "SS_Search", "frames": 97, "loop": true},
+                    {"name": "SS_Attack", "frames": 36, "loop": false, "root_motion_cm": 80, "stab_frame": 15}, {"name": "SS_Hit", "frames": 30, "loop": false},
+                    {"name": "SS_Run", "frames": 25, "loop": true, "natural_speed_cm_s": 160}, {"name": "SS_TurnL", "frames": 48, "loop": false, "root_yaw_deg": 90}, {"name": "SS_TurnR", "frames": 48, "loop": false, "root_yaw_deg": -90},
+                    {"name": "SS_Alert", "frames": 30, "loop": false}, {"name": "SS_Death", "frames": 60, "loop": false}], "movement": "Walking (CharacterMovement)"},
     {"file": "SK_Gigantura.fbx", "type": "skeletal", "role": "enemy", "length_cm": 385, "facing": "Blender -Y", "bones": 15, "tris": 98470, "version": "v4 (2026-11-20)",
      "material": "M_Gigantura", "textures": ["Textures/T_Gigantura_BaseColor.png","Textures/T_Gigantura_Normal.png (OpenGL, flip green in UE)","Textures/T_Gigantura_Roughness.png","Textures/T_Gigantura_Emissive.png"],
      "root_bone": "gt_root (body center)", "jaw_bone": "gt_jaw",
-     "animations": [{"name": "GT_Swim", "frames": 37, "loop": true}, {"name": "GT_Idle", "frames": 97, "loop": true},
-                    {"name": "GT_Bite", "frames": 31, "loop": false, "root_motion_cm": 75, "bite_close_frame": 13},
-                    {"name": "GT_Search", "frames": 97, "loop": true}, {"name": "GT_Hit", "frames": 31, "loop": false, "impact_frame": 3}],
+     "animations": [{"name": "GT_Swim", "frames": 41, "loop": true, "version": "v5 2026-11-23", "natural_speed_cm_s": 175}, {"name": "GT_Idle", "frames": 97, "loop": true},
+                    {"name": "GT_Bite", "frames": 30, "loop": false, "root_motion_cm": 75, "bite_close_frame": 14},
+                    {"name": "GT_Search", "frames": 97, "loop": true}, {"name": "GT_Hit", "frames": 30, "loop": false, "impact_frame": 3, "style": "C-start"}],
      "slots": ["M_Gigantura"],
      "movement": "Flying / FloatingPawnMovement"},
     {"file": "SK_DeepSeaEel.fbx", "type": "skeletal", "role": "enemy", "length_cm": 490, "facing": "Blender -Y", "bones": 19, "tris": 95308, "version": "v3 (2026-11-20)",
      "material": "M_DeepSeaEel", "textures": ["Textures/T_DeepSeaEel_BaseColor.png","Textures/T_DeepSeaEel_Normal.png (OpenGL, flip green in UE)","Textures/T_DeepSeaEel_Roughness.png","Textures/T_DeepSeaEel_Emissive.png"],
      "root_bone": "eel_root (behind head)", "jaw_bone": "eel_jaw",
-     "animations": [{"name": "EEL_Swim", "frames": 49, "loop": true}, {"name": "EEL_Idle", "frames": 97, "loop": true},
-                    {"name": "EEL_Bite", "frames": 37, "loop": false, "root_motion_cm": 95, "bite_close_frame": 16},
-                    {"name": "EEL_Search", "frames": 97, "loop": true}, {"name": "EEL_Hit", "frames": 31, "loop": false, "impact_frame": 3}],
+     "animations": [{"name": "EEL_Swim", "frames": 41, "loop": true, "version": "v5 2026-11-23", "natural_speed_cm_s": 130}, {"name": "EEL_Idle", "frames": 97, "loop": true},
+                    {"name": "EEL_Bite", "frames": 36, "loop": false, "root_motion_cm": 95, "bite_close_frame": 17},
+                    {"name": "EEL_Search", "frames": 97, "loop": true}, {"name": "EEL_Hit", "frames": 30, "loop": false, "impact_frame": 3, "style": "C-start"}],
      "slots": ["M_DeepSeaEel"],
      "notes": ["tail-tip lure: add skeleton socket at end of eel_spine_16 + pink PointLight", "blue photophores + amber eyes via emissive texture"], "movement": "Flying / FloatingPawnMovement"},
     {"file": "SK_Kraken.fbx", "type": "skeletal", "role": "enemy", "length_cm": 600, "width_cm": 360, "facing": "Blender -Y (arms forward)", "bones": 69, "tris": 130171,
      "material": "M_Kraken", "textures": ["Textures/T_Kraken_BaseColor.png","Textures/T_Kraken_Normal.png (OpenGL, flip green in UE)","Textures/T_Kraken_Roughness.png","Textures/T_Kraken_Emissive.png"],
      "root_bone": "kr_root (head/mantle joint)", "bone_groups": {"head": "kr_head", "mantle": ["kr_mantle_01","kr_mantle_02","kr_mantle_03"],
        "arms": "kr_arm1..8_1..6", "tentacles": "kr_tentL_1..8, kr_tentR_1..8"},
-     "animations": [{"name": "KR_Idle", "frames": 81, "loop": true}, {"name": "KR_Swim", "frames": 41, "loop": true},
+     "animations": [{"name": "KR_Idle", "frames": 97, "loop": true}, {"name": "KR_Swim", "frames": 49, "loop": true, "version": "v5 2026-11-23", "style": "squid arms-first cruise + mantle jet", "natural_speed_cm_s": 120},
                     {"name": "KR_Attack", "frames": 31, "loop": false, "root_motion_cm": 100, "grab_frame": 16},
                     {"name": "KR_Search", "frames": 97, "loop": true}, {"name": "KR_Hit", "frames": 31, "loop": false, "impact_frame": 3}],
      "slots": ["M_Kraken"], "notes": ["needs LOD", "glowing eyes via emissive texture"], "movement": "Flying / FloatingPawnMovement"},
@@ -909,7 +980,7 @@ AI 에이전트를 위한 기준 데이터입니다. 단위는 cm, 축은 Blende
      "material": "M_GiantIsopod", "textures": ["Textures/T_GiantIsopod_BaseColor.png","Textures/T_GiantIsopod_Normal.png (OpenGL, flip green in UE)","Textures/T_GiantIsopod_Roughness.png","Textures/T_GiantIsopod_Emissive.png"],
      "root_bone": "is_root (ground level, body centre)", "bone_groups": {"body": ["is_head","is_seg1","is_seg2","is_seg3","is_body","is_seg5","is_seg6","is_seg7","is_pleon","is_tail"],
        "legs": "is_legL1..7_1..3, is_legR1..7_1..3", "antennae": "is_antL_1..5, is_antR_1..5", "maxillipeds": "is_clawL_1..2, is_clawR_1..2", "uropods": "is_uroL, is_uroR"},
-     "animations": [{"name": "IS_Idle", "frames": 97, "loop": true}, {"name": "IS_Walk", "frames": 37, "loop": true, "in_place": true},
+     "animations": [{"name": "IS_Idle", "frames": 97, "loop": true}, {"name": "IS_Walk", "frames": 37, "loop": true, "in_place": true, "version": "v5 2026-11-23", "gait": "metachronal, duty 0.65", "natural_speed_cm_s": 30},
                     {"name": "IS_Attack", "frames": 31, "loop": false, "root_motion_cm": 60, "bite_frame": 16},
                     {"name": "IS_Search", "frames": 97, "loop": true}, {"name": "IS_Hit", "frames": 31, "loop": false, "impact_frame": 3}],
      "slots": ["M_GiantIsopod"], "notes": ["v3 faithful Bathynomus, AO baked into BaseColor, emissive = faint eye glint only"], "movement": "Walking (CharacterMovement), capsule r~60 hh~35"}
